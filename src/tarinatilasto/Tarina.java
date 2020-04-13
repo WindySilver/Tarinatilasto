@@ -427,8 +427,7 @@ public class Tarina implements Cloneable, Tietue {
     
     @Override
     public boolean equals(Object tarina) {
-        if (tarina instanceof Tarina) return equals((Tarina)tarina);
-        return false;
+        return this.toString().equals(tarina.toString());
     }
     
     

@@ -43,6 +43,12 @@ public class Sarja implements Cloneable {
     }
     
     
+    @Override
+    public boolean equals(Object sarja) {
+        return this.toString().equals(sarja.toString());
+    }
+    
+    
     /**
      * Testausta varten luotu muodostaja, joka ottaa tiedot parametreinaan.
      * @param tunnusNro Sarjan tunnusnumero.

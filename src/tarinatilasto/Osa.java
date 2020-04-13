@@ -152,6 +152,12 @@ public class Osa implements Cloneable, Tietue {
     }
     
     
+    @Override
+    public boolean equals(Object osa) {
+        return this.toString().equals(osa.toString());
+    }
+    
+    
     /**
      * Alustetaan tietyn tarinan osa.
      * @param tarinaNro Tarinan viitenumero.
