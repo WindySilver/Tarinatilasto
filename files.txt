@@ -1,0 +1,71 @@
+﻿!https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/noemjoke = Suunnitelma TIMissä
+
+<h3>Kuvamateriaali</h3>
+kuvat/htpaaikkuna.png = ohjelman alustava pääikkuna (käsin piirretty)
+kuvat/ht2suunnitelma.fxml = kakkosvaiheen suunnitelman tiedosto
+kuvat\ht2muokkausikkuna.fxml = tarinan muokkausikkuna kakkosvaiheen suunnitelmaan
+kuvat\ht2osamuokkausikkuna.fxml = tarinan osien muokkausikkuna kakkosvaiheen suunnitelmaan
+kuvat/ht2paaikkuna.png = kakkosvaiheen pääikkunan kuva
+kuvat\ht2muokkausikkuna.png = tarinan muokkausikkuna kakkosvaiheen suunnitelmaan
+kuvat\ht2osamuokkausikkuna.png = tarinan osien muokkausikkuna kakkosvaiheen suunnitelmaan
+kuvat\ht3muokkausikkuna.png = tarinan muokkausikkuna kolmosvaiheen suunnitelmaan
+kuvat\ht3paaikkuna.png = kolmosvaiheen pääaikkunan kuva
+kuvat\ht3uusisarja.png = kolmosvaiheen uuden sarjan lisäysikkunan kuva
+kuvat\ht3osamuokkausikkuna.png = osan muokkausikkunan kuva harjoitustyön suunnitelmaan
+kuvat\ht3tulostusikkuna.png = Tulostusikkunan kuva harjoitustyön suunnitelmaan
+kuvat\ht3tietoja.png = Tietoikkuna harjoitustyön suunnitelmaan
+kuvat\ht3avausikkuna.png = Avausikkunan kuva harjoitustyön suunnitelmaan
+kuvat\ht7avausikkuna.png = Avausikkunan kuva harjoitustyön suunnitelmaan
+kuvat\ht7tietoja.png = Tietoikkunan kuva harjoitustyön suunnitelmaan
+kuvat\ht7muokkausikkuna.png = tarinan muokkausikkuna seiskavaiheen suunnitelmaan
+kuvat\ht7ohjeita.png = kuva ohjeita ikkunasta suunnitelmaan
+kuvat\ht7osamuokkausikkuna.png = kuva osien muokkausikkunasta suunnitelmaan
+kuvat\ht7paaikkuna.png = seiskavaiheen pääikkunan kuva
+kuvat\ht7tulostusikkuna.png = Tulostusikkunan kuva harjoitustyön seiskavaiheen suunnitelmaan
+kuvat\ht7uusisarja.png = seiskavaiheen uuden sarjan lisäysikkunan kuva
+kuvat\ht7vaihdatarinansarjaa.png = kuva seiskavaiheen ikkunasta, jossa vaihdetaan tarinan sarjaa
+kuvat\ht7virheilmoitus.png = kuva virheilmoituksesta seiskavaiheessa 
+
+<h3>Tietorakenne</h3>
+kuvat\tarinatilasto.svg = Tietorakenteen kuva
+kuvat\tarinatilasto.png = Tietorakenteen kuva, jonka TIM pystyy näyttämäänkin
+
+<h3>Tietorakenteiden käsittely koodissa</h3>
+src\tarinatilasto\Sarja.java = Luokka sarjalle
+src\tarinatilasto\Sarjat.java = Luokka sarjoille
+src\tarinatilasto\Tarina.java = Luokka tarinalle
+src\tarinatilasto\Tarinat.java = Luokka tarinoille
+src\tarinatilasto\Osa.java = Luokka osalle
+src\tarinatilasto\Osat.java = Luokka osille
+src\tarinatilasto\Tarinatilasto.java = Luokka tarinatilastolle
+src\tarinatilasto\SailoException.java = Luokka tietorakenteesta johtuville poikkeuksille
+src\tarinatilasto\SarjaTest.java = generoidut Junit testit sarja-luokalle
+src\tarinatilasto\SisaltoTarkistaja.java = Luokka tarkistajalle, joka tarkistaa tekstikenttien sisällöt.
+src\tarinatilasto\Tietue.java = Rajapinta tietueelle.
+
+<h3>Käyttöliittymän ulkoasu</h3>
+src\fxtarina\tarinatilasto.css = Tarinatilaston CSS-tiedosto
+src\fxtarina\TarinatilastoGUIView.fxml = Tarinatilaston pääikkunan FXML-tiedosto
+src\fxtarina\TarinatilastoOsamuokkausGUI.fxml = Osien muokkausikkunan FXML
+src\fxtarina\TarinatilastoTietuemuokkausGUI.fxml = Tarinoiden muokkausikkunan FXML
+src\fxtarina\TarinatilastoUusiSarjaGUI.fxml = Uuden sarjan luomisikkunan FXML
+src\fxtarina\TietojaView.fxml = Tietoikkunan FXML
+src\fxtarina\AvausView.fxml = Avausikkunan FXML
+src\fxtarina\TulostusView.fxml = Tulostusikkunan FXML
+src\fxtarina\TarinatilastoOhjeGUI.fxml = Ohjeikkunan FXML
+src\fxtarina\TarinatilastoSarjavaihtoGUI.fxml = Tarinan sarjan vaihtamisen ikkunan FXML
+
+<h3>Käyttöliittymän koodi</h3>
+src\fxtarina\TarinatilastoMain.java = Tarinatilaston pääohjelma
+src\fxtarina\TarinatilastoGUIController.java = Tarinatilaston pääikkunan kontrolleri
+src\fxtarina\TarinatilastoTulostusController.java = Tulostusikkunan kontrolleri
+src\fxtarina\TarinatilastoAvausController.java = Kontrolleri tiedoston avaamiselle
+src\fxtarina\TarinatilastoTietuemuokkausController.java = Kontrolleri tarinoiden muokkausikkunalle
+src\fxtarina\TarinatilastoSarjaController.java = Kontrolleri sarjan luomis- ja muokkausikkunalle
+src\fxtarina\TarinatilastoSarjavaihtoController.java = Kontrolleri sarjan vaihtoikkunalle
+
+<h3>Muita tiedostoja</h3>
+tarinat\tarinat.dat = Tarinoiden tekstitiedosto
+tarinat\sarjat.dat = sarjojen tekstitiedosto
+tarinat\osat.dat = osien tekstitiedosto
+tarinatilasto.jar = Tarinatilaston ajettava jar-tiedosto

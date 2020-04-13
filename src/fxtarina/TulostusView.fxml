@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxtarina.TarinatilastoTulostusController">
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
+          <Button mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta" />
+            <Button cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="Peruuta" />
+        </buttons>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin>
+      </ButtonBar>
+   </bottom>
+   <center>
+      <TextArea fx:id="tulostusalue" editable="false" prefHeight="600.0" prefWidth="400.0" text="Valitut tarinat&#10;___________________________________________&#10;id&#9;&#9;&#9;: 1&#10;Nimi&#9;&#9;: Testi1&#10;Sarja&#9;&#9;: Testisarja&#10;Tekijä&#9;&#9;: Testi Testaaja&#10;Kieli&#9;&#9;&#9;: suomi&#10;Sanamäärä&#9;: 192402&#10;Osien määrä&#9;: 12&#10;Julkaisut&#9;&#9;: DeviantArt&#10;Lisätietoja&#9;: -&#10;___________________________________________&#10;1&#9;Testaus1&#9;&#9;2391&#10;2&#9;Testaus2&#9;&#9;4921&#10;&#10;&#10;&#10;___________________________________________&#10;id&#9;&#9;&#9;: 2&#10;Nimi&#9;&#9;: Testi1&#10;Sarja&#9;&#9;: Test Series&#10;Tekijä&#9;&#9;: Testi Testaaja&#10;Kieli&#9;&#9;&#9;: englanti&#10;Sanamäärä&#9;: 238212&#10;Osien määrä&#9;: 12&#10;Julkaisut&#9;&#9;: Wattpad&#10;Lisätietoja&#9;: -&#10;___________________________________________&#10;1&#9;Testing1&#9;&#9;3429&#10;2&#9;Test2&#9;&#9;5839" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Calibri" size="16.0" />
+         </font>
+      </TextArea>
+   </center>
+</BorderPane>

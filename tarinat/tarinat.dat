@@ -1,0 +1,6 @@
+; Kenttien järjestys tiedostossa on seuraava:
+;id|tarinan nimi|sarjan id|tekijä|kieli|sanamäärä|osien määrä|sivumäärä|julkaisut|lisätiedot|
+1|Testi1|1|Testi Testaaja|suomi|192402.0|12.0|631|DeviantArt|-
+2|Test1|2|Testi Testaaja|englanti|238212.0|12.0|792|Wattpad|-
+3|Testi2|1|Testari & Tester|suomi|2849213.0|39.0|1489|DeviantArt|-
+5|Lyhäri1|0|Testari|suomi|1830.5|1.0|9|DeviantArt|-

@@ -1,0 +1,9 @@
+; Kenttien järjestys tiedostossa on seuraava:
+;oid|tid|numero|nimi|sanamäärä|sivumäärä|
+1|1|1|Testaus1|2391.0|5
+2|1|2|Testaus2|4921.0|10
+3|2|1|Testing1|3429.0|7
+4|2|2|Test2|5839.0|12
+5|3|1|Testaa1|6832.0|15
+6|3|2|Testaa2|6738.0|15
+7|5|1|Tarina|1830.5|9

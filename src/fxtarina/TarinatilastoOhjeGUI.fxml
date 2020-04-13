@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+   <right>
+      <TextArea editable="false" prefHeight="300.0" styleClass="tietoja" stylesheets="@tarinatilasto.css" text="Ohjeita Tarinatilaston käyttöön:&#10;Ilman sarjaa et voi luoda tarinaa ja ilman tarinaa et voi luoda osaa.&#10;Tuplaklikkaa jotain tarinan tai osan tietoriveistä muokataksesi sitä.&#10;- Huom! Tarinan sarjan nimen tupklikkaus avaa ikkunan, jossa voi vaihtaa tarinan sarjaa.&#10;Muokkaa-valikosta löytyy muokkausvaihtoehtoja.&#10;-Muokattavan asian on oltava valittuna, muuten muokkaustoiminnot eivät tee mitään!&#10;Tarinat näytetään vasemmassa reunassa valitun sarjan mukaan. Valitse toinen sarja nähdäksesi muita tarinoita.&#10;Mikäli muokkaukset eivät näy, klikkaa tarinaa listalta uudestaan, niin muutokset tulevat näkyviin. Tämän, kuten myöskin ensimmäisen löydetyn tarinan tulemisen valituksi vain satunnaisesti haettaessa, taustalla on bugi, jota ei ole saatu korjattua.&#10;Tallennustiedostot löytyvät siitä kansiosta, josta käynnistit Tarinatilaston. Voit tehdä omat tallennustiedostosi minkä tahansa nimiseen kansioon antamalla joko Tarinatilaston käynnistyessä tai Tiedosto -&gt; Avaa -valikosta kansion nimen.&#10;- Uusi kansio luodaan automaattisesti, jos Tarinatilaston kansiosta ei annetulla nimellä löydy sellaista, ja uudet tiedostot luodaan ensimmäisellä tallennuskerralla, jos niitä ei löydy.&#10;- Mikäli et anna kansiolle nimeä, tiedostot luodaan siihen kansioon, josta Tarinatilasto käynnistetään." wrapText="true" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
+   </right>
+</BorderPane>

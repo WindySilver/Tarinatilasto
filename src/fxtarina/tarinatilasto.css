@@ -1,0 +1,9 @@
+.tietoja{
+	/* @SuppressWarning */
+	-fx-background-color: #f3f3f3;
+}
+
+.virhe{
+	/* @SuppressWarning */
+	-fx-background-color: red;
+}
