@@ -1,19 +1,86 @@
 package tarinatilasto;
 
 import java.io.*;
+import java.sql.*;
 
 import fi.jyu.mit.ohj2.Mjonot;
 
 /**
  * Luokka sarjalle, joka määrittää sen, mitkä tarinat kuuluvat samaan jatkumoon.
  * @author Janne Taipalus & Noora Jokela
- * @version 2.5.2019
+ * @version 18.5.2020
  */
 public class Sarja implements Cloneable {
 
-    private String nimi = "";
     private int tunnusNro;
+    private String nimi = "";
     private static int seuraavaNro = 0;
+   
+    
+    //**********
+    //SQL alkaa
+    
+    
+    /**
+     * Antaa tietokannan luontilausekkeen sarjataululle
+     * @return Sarjataulun luontilauseke
+     */
+    public String annaLuontilauseke() {
+        return "CREATE TABLE Sarjat (" +
+                "tunnusNro INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nimi VARCHAR (100) NOT NULL" +
+                ")";
+    }
+    
+    
+    /**
+     * Antaa sarjan lisäyslausekkeen
+     * @param con tietokantayhteys
+     * @return sarjan lisäyslauseke
+     * @throws SQLException Jos lausekkeen luonnissa on ongelmia
+     */
+    public PreparedStatement annaLisayslauseke(Connection con)
+            throws SQLException {
+        PreparedStatement sql = con.prepareStatement("INSERT INTO Sarjat" +
+                "(tunnusNro, nimi) " +
+                "VALUES (?, ?)");
+        
+        // Syötetään kentät näin välttääksemme SQL-injektiot.
+        // Käyttäjän syötteitä ei ikinä vain kirjoiteta kyselymerkkijonoon
+        // tarkistamatta niitä SQL-injektioiden varalta!
+        if ( tunnusNro != 0 ) sql.setInt(1, tunnusNro); else sql.setString(1, null);
+        sql.setString(2, nimi);
+
+        return sql;
+    }
+    
+    
+    /**
+     * Tarkistetaan onko id muuttunut lisäyksessä
+     * @param rs lisäyslauseen ResultSet
+     * @throws SQLException jos tulee jotakin vikaa
+     */
+    public void tarkistaId(ResultSet rs) throws SQLException {
+        if ( !rs.next() ) return;
+        int id = rs.getInt(1);
+        if ( id == tunnusNro ) return;
+        setTunnusNro(id);
+    }
+    
+    
+    /**
+     * Ottaa sarjan tiedot ResultSetistä
+     * @param tulokset Tulokset joista tiedot otetaan
+     * @throws SQLException jos jokin menee väärin
+     */
+    public void parse(ResultSet tulokset) throws SQLException {
+        setTunnusNro(tulokset.getInt("tunnusNro"));
+        nimi = tulokset.getString("nimi");
+    }
+    
+    
+    //********
+    //SQL loppuu
     
     
     /**
@@ -190,7 +257,16 @@ public class Sarja implements Cloneable {
         return null;
     }
     
-    
+    /**
+     * Laitoin, koska Java halusi sen.
+     */
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+        return super.hashCode();
+    }
+
+
     /**
      * Testipääohjelma sarjalle.
      * @param args Ei käytössä

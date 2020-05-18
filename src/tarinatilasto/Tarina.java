@@ -1,6 +1,7 @@
 package tarinatilasto;
 
 import java.io.*;
+import java.sql.*;
 import java.util.Random;
 import java.util.Comparator;
 
@@ -9,7 +10,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Luokka tarinalle.
  * @author Noora Jokela ja Janne Taipalus
- * @version 6.7.2019
+ * @version 18.5.2020
  *
  */
 public class Tarina implements Cloneable, Tietue {
@@ -26,8 +27,99 @@ public class Tarina implements Cloneable, Tietue {
     private String lisatietoja = "";
     
     private static int seuraavaNumero = 0;
+   
     
-
+    //*******
+    //SQL alkaa
+    
+    /**
+     * Antaa tietokannan luontilausekkeen tarinataululle
+     * @return tarinataulun luontilauseke
+     */
+    public String annaLuontilauseke() {
+        return "CREATE TABLE Tarinat (" +
+                "idNumero INTEGER PRIMARY KEY AUTOINCREMENT , " + 
+                "nimi VARCHAR(100) NOT NULL, " +
+                "sarjaID INTEGER NOT NULL, " +
+                "tekija VARCHAR(100), " +
+                "kieli VARCHAR(100), " +
+                "sanamaara DOUBLE, " +
+                "osienMaara DOUBLE, " +
+                "sivumaara INTEGER, " +
+                "julkaisut VARCHAR(100), " +
+                "lisatietoja VARCHAR(5000), " +
+                ")";
+    }
+    
+    
+    /**
+     * Antaa tarinan lisäyslausekkeen
+     * @param con tietokantayhteys
+     * @return tarinan lisäyslauseke
+     * @throws SQLException Jos lausekkeen luonnissa on ongelmia
+     */
+    public PreparedStatement annaLisayslauseke(Connection con)
+            throws SQLException {
+        PreparedStatement sql = con.prepareStatement("INSERT INTO Tarinat" +
+                "(idNumero, nimi, sarjaID, tekija, kieli, sanamaara, " +
+                "osienMaara, sivuMaara, julkaisut, lisatietoja) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        
+        // Syötetään kentät näin välttääksemme SQL-injektiot.
+        // Käyttäjän syötteitä ei ikinä vain kirjoiteta kyselymerkkijonoon
+        // tarkistamatta niitä SQL-injektioiden varalta!
+        if ( idNumero != 0 ) sql.setInt(1, idNumero); else sql.setString(1, null);
+        sql.setString(2, nimi);
+        sql.setInt(3, sarjaID);
+        sql.setString(4, tekija);
+        sql.setString(5, kieli);
+        sql.setDouble(6, sanamaara);
+        sql.setDouble(7, osienMaara);
+        sql.setInt(8, sivumaara);
+        sql.setString(9, julkaisut);
+        sql.setString(10, lisatietoja);
+        
+        return sql;
+    }
+    
+    
+    /**
+     * Tarkistetaan onko id muuttunut lisäyksessä
+     * @param rs lisäyslauseen ResultSet
+     * @throws SQLException jos tulee jotakin vikaa
+     */
+    public void tarkistaId(ResultSet rs) throws SQLException {
+        if ( !rs.next() ) return;
+        int id = rs.getInt(1);
+        if ( id == idNumero ) return;
+        setIdNumero(id);
+    }
+    
+    
+    /**
+     * Ottaa tarinan tiedot ResultSetistä
+     * @param tulokset Tulosta, joista tiedot otetaan
+     * @throws SQLException jos jokin menee pieleen
+     */
+    public void parse(ResultSet tulokset) throws SQLException
+    {
+        setIdNumero(tulokset.getInt("idNumero"));
+        nimi = tulokset.getString("nimi");
+        sarjaID = tulokset.getInt("sarjaID");
+        tekija = tulokset.getString("tekija");
+        kieli = tulokset.getString("kieli");
+        sanamaara = tulokset.getDouble("sanamaara");
+        osienMaara = tulokset.getDouble("osienMaara");
+        sivumaara = tulokset.getInt("sivumaara");
+        julkaisut = tulokset.getString("julkaisut");
+        lisatietoja = tulokset.getString("lisatietoja");
+    }
+    
+    
+    //*******
+    //SQL päättyy
+    
+    
     /**
      * Tarinoiden vertailija.
      */

@@ -1,13 +1,14 @@
 package tarinatilasto;
 
 import java.io.*;
+import java.sql.*;
 
 import fi.jyu.mit.ohj2.Mjonot;
 
 /**
  * Tarinan osan/lukun (käytetään nimeä osa) luokka.
  * @author Janne Taipalus & Noora Jokela
- * @version 2.5.2019
+ * @version 18.5.2020
  */
 public class Osa implements Cloneable, Tietue {
     
@@ -19,6 +20,85 @@ public class Osa implements Cloneable, Tietue {
     private int sivumaara;
     
     private static int seuraavaNro = 0;
+    
+    
+    //******
+    //SQL alkaa
+    
+    
+    /**
+     * Antaa tietokannan luontilausekkeen osataululle
+     * @return Osataulun luontilauseke
+     */
+    public String annaLuontilauseke() {
+        return "CREATE TABLE Osat (" +
+                "tunnusNro INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                "tarinaNro INTEGER NOT NULL, " +
+                "nimi VARCHAR(100) NOT NULL, " +
+                "sanamaara DOUBLE, " +
+                "numero INTEGER NOT NULL, " +
+                "sivumaara INTEGER" +
+                ")";
+    }
+    
+    
+    /**
+     * Antaa osan lisäyslausekkeen
+     * @param con tietokantayhteys
+     * @return osan lisäyslauseke
+     * @throws SQLException Jos lausekkeen luonnissa on ongelmia
+     */
+    public PreparedStatement annaLisayslauseke(Connection con)
+            throws SQLException {
+        PreparedStatement sql = con.prepareStatement("INSERT INTO Osat" +
+                "(tunnusNro, tarinaNro, nimi, sanamaara, " +
+                "numero, sivumaara) " +
+                "VALUES (?, ?, ?, ?, ?, ?)");
+        
+        // Syötetään kentät näin välttääksemme SQL-injektiot.
+        // Käyttäjän syötteitä ei ikinä vain kirjoiteta kyselymerkkijonoon
+        // tarkistamatta niitä SQL-injektioiden varalta!
+        if ( tunnusNro != 0 ) sql.setInt(1, tunnusNro); else sql.setString(1, null);
+        sql.setInt(2, tarinaNro);
+        sql.setString(3, nimi);
+        sql.setDouble(4, sanamaara);
+        sql.setInt(5, numero);
+        sql.setInt(6, sivumaara);
+        
+        return sql;
+    }
+    
+    
+    /**
+     * Tarkistetaan onko id muuttunut lisäyksessä
+     * @param rs lisäyslauseen ResultSet
+     * @throws SQLException jos tulee jotakin vikaa
+     */
+    public void tarkistaId(ResultSet rs) throws SQLException {
+        if ( !rs.next() ) return;
+        int id = rs.getInt(1);
+        if ( id == tunnusNro ) return;
+        setTunnusNro(id);
+    }
+    
+    
+    /**
+     * Ottaa osan tiedot ResultSetitsä
+     * @param tulokset Tulokset joista tiedot otetaan
+     * @throws SQLException Jos jokin menee väärin
+     */
+    public void parse(ResultSet tulokset) throws SQLException{
+        setTunnusNro(tulokset.getInt("tunnusNro"));
+        tarinaNro = tulokset.getInt("tarinaNro");
+        nimi = tulokset.getString("nimi");
+        sanamaara = tulokset.getDouble("sanamaara");
+        numero = tulokset.getInt("numero");
+        sivumaara = tulokset.getInt("sivumaara");
+    }
+    
+    
+    //******
+    //SQL loppuu
     
     
     /**
@@ -318,7 +398,16 @@ public class Osa implements Cloneable, Tietue {
         }   
     }
     
-    
+    /**
+     * Laitoin, koska Java halusi sen.
+     */
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+        return super.hashCode();
+    }
+
+
     /**
      * Testiohjelma osalle.
      * @param args ei käytössä

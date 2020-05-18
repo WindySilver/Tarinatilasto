@@ -56,6 +56,7 @@ tmp/
 *~.nib
 local.properties
 .loadpath
+.classpath
 
 ##############################
 ## NetBeans
