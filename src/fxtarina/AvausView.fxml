@@ -21,7 +21,7 @@
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin></Label>
-                  <Label alignment="CENTER" text="Versio 1.0">
+                  <Label alignment="CENTER" text="Versio 1.2">
                <font>
                   <Font name="Arial" size="25.0" />
                </font></Label>
@@ -32,6 +32,11 @@
                <font>
                   <Font name="Belwe Lt BT Light" size="30.0" />
                </font></Label>
+            <Label alignment="CENTER" text="Windows: Anna kansion nimi suhteessa käynnistyskansioon.&#10;Linux: Anna kansion koko osoite (esim. /home/käyttäjänimi/Tarinat)" wrapText="true">
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
          </children>
       </VBox>
    </center>
