@@ -1,8 +1,8 @@
 # Tarinatilasto
 
 Ohjelmointi 2 2019 kevät harjoitustyö (siirretty valmiina Githubiin toisesta versiohallinnasta)
-To-do:
-    Tietokantalisäosaversio
-    Englanninkielinen käännös
+Java ja tietokannat 2020 muutokset
 
-The Finnish version of Story Statistics. The English version of this is on my to-do list.
+Tämä on läpäisyvaatimuksiin asti tehty muunnelma, jota ei enää päivitetä. Täysin toimiva versio on master-haarassa.
+
+This version of Story Statistics is a modification made for another course to the point where it passed the course. This is a deprecated version. The fully functional one is in the master branch.
