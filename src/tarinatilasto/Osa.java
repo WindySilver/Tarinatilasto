@@ -50,7 +50,7 @@ public class Osa implements Cloneable, Tietue {
      */
     public PreparedStatement annaLisayslauseke(Connection con)
             throws SQLException {
-        PreparedStatement sql = con.prepareStatement("INSERT INTO Osat" +
+        PreparedStatement sql = con.prepareStatement("INSERT INTO Osat " +
                 "(tunnusNro, tarinaNro, nimi, sanamaara, " +
                 "numero, sivumaara) " +
                 "VALUES (?, ?, ?, ?, ?, ?)");

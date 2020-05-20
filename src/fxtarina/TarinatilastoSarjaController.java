@@ -22,6 +22,7 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
 
     @FXML private TextField editNimi;
     @FXML private Label labelVirhe;
+    private Sarja palautettava;
     
     
     @Override
@@ -35,12 +36,13 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
             naytaVirhe("Nimi ei saa olla tyhjä!");
             return;
         }
+        palautettava = sarjaKohdalla;
         ModalController.closeStage(labelVirhe);
     }
     
     
     @FXML private void handleCancel() {
-        sarjaKohdalla = null;
+        //sarjaKohdalla = null;
         ModalController.closeStage(labelVirhe);
     }
 
@@ -95,7 +97,7 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
     
     @Override
     public Sarja getResult() {
-        return sarjaKohdalla;
+        return palautettava;
     }
     
     @Override

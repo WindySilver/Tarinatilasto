@@ -99,7 +99,8 @@ public class TarinatilastoGUIController implements Initializable {
       
       
       @FXML private void handlePoistaSarja() {
-          poistaSarja();
+          //poistaSarja();
+          Dialogs.showMessageDialog("Ei käytössä!");
       }
       
       
@@ -119,22 +120,23 @@ public class TarinatilastoGUIController implements Initializable {
 
 
     @FXML private void handlePoistaOsa() {
-          poistaOsa();
+          //poistaOsa();
+        Dialogs.showMessageDialog("Ei käytössä!");
       }
       
     
-      @FXML private void handleAvaa() throws IOException {
-          tallenna();
+      @FXML private void handleAvaa() throws IOException, ClassNotFoundException {
           avaa();
       }
       
 
       @FXML private void handlePoistaTarina() {
-            poistaTarina();
+            //poistaTarina();
+          Dialogs.showMessageDialog("Ei käytössä!");
         }
         
       
-        @FXML private void handleTulosta() {
+        @FXML private void handleTulosta() throws SailoException {
             TarinatilastoTulostusController tulostusCtrl = TarinatilastoTulostusController.tulosta(null); 
             tulostaValitut(tulostusCtrl.getTextArea());
         }
@@ -199,8 +201,9 @@ public class TarinatilastoGUIController implements Initializable {
        * Avataan uusi tiedosto.
        * @return true tai false
        * @throws IOException jos tiedoston luvussa on ongelmia
+     * @throws ClassNotFoundException test
        */
-      public boolean avaa() throws IOException {
+      public boolean avaa() throws IOException, ClassNotFoundException {
           String uusiNimi = TarinatilastoAvausController.kysyNimi(null, tiedostonNimi);
           if (uusiNimi == null) return false;
           alusta();
@@ -246,8 +249,9 @@ public class TarinatilastoGUIController implements Initializable {
        * @param nimi Tiedosto, josta tarinoiden tiedot luetaan.
        * @return null jos onnistuu, muuten virhe tekstinä
        * @throws IOException jos tiedoston luvussa on ongelmia
+     * @throws ClassNotFoundException test
        */
-      protected String lueTiedosto(String nimi) throws IOException {
+      protected String lueTiedosto(String nimi) throws IOException, ClassNotFoundException {
           tiedostonNimi=nimi;
           setTitle("Tiedosto: " + tiedostonNimi);
           try {
@@ -266,8 +270,9 @@ public class TarinatilastoGUIController implements Initializable {
       /**
        * Asettaa käytettävän tarinatilaston.
        * @param tarinatilasto Tarinatilasto, jota käytetään tässä käyttöliittymässä
+     * @throws SailoException jos jotain menee pieleen
        */
-      public void setTarinatilasto(Tarinatilasto tarinatilasto) {
+      public void setTarinatilasto(Tarinatilasto tarinatilasto) throws SailoException {
           this.tarinatilasto=tarinatilasto;
           naytaTarina();
       }
@@ -276,8 +281,9 @@ public class TarinatilastoGUIController implements Initializable {
       /**
        * Tulostaa listassa olevat tarinat tekstialueeseen.
        * @param teksti Alue, johon tulostetaan.
+     * @throws SailoException jos jotain menee pieleen
        */
-      public void tulostaValitut(TextArea teksti) {
+      public void tulostaValitut(TextArea teksti) throws SailoException {
           try(PrintStream os = TextAreaOutputStream.getTextPrintStream(teksti)) {
               os.println("Tulostetaan kaikki tarinat");
               for(Tarina tarina : chooserTarinat.getObjects())
@@ -293,8 +299,9 @@ public class TarinatilastoGUIController implements Initializable {
        * Tulostaa valitun sarjan tarinoiden ja niiden osien tiedot.
        * @param os Tietovirta, johon tulostetaan.
        * @param tarina Tulostettava tarina.
+     * @throws SailoException jos jotain menee pieleen
        */
-      public void tulosta(PrintStream os, final Tarina tarina) {
+      public void tulosta(PrintStream os, final Tarina tarina) throws SailoException {
           os.println("-------------------------------");
           tarina.tulosta(os, sarjaKohdalla.getNimi());
           os.println("-------------------------------");
@@ -333,7 +340,13 @@ public class TarinatilastoGUIController implements Initializable {
        */
       protected void alusta( ) {
           chooserTarinat.clear();
-          chooserTarinat.addSelectionListener(e -> naytaTarina());
+          chooserTarinat.addSelectionListener(e -> {
+            try {
+                naytaTarina();
+            } catch (SailoException e1) {
+                e1.printStackTrace();
+            }
+        });
           chooserSarjat.clear();
           chooserSarjat.addSelectionListener(e -> naytaSarja());
           tarinahakuKentta.clear();
@@ -393,8 +406,9 @@ public class TarinatilastoGUIController implements Initializable {
     
       /**
        * Laittaa listasta valitun tarinan tiedot tekstikenttiin.
+     * @throws SailoException jos jotain menee pieleen
        */
-      protected void naytaTarina() {
+      protected void naytaTarina() throws SailoException {
           tarinaKohdalla = chooserTarinat.getSelectedObject();
           
           if (tarinaKohdalla == null) return;
@@ -428,8 +442,9 @@ public class TarinatilastoGUIController implements Initializable {
       /**
        * Näyttää tarinan osat.
        * @param tarina Tarina, jonka osat näytetään.
+     * @throws SailoException jos jotain menee pielene
        */
-      private void naytaOsat(Tarina tarina) {
+      private void naytaOsat(Tarina tarina) throws SailoException {
           osaGrid.clear();
           if(tarina == null) return;
         
@@ -455,17 +470,28 @@ public class TarinatilastoGUIController implements Initializable {
       protected void haeSarja(int tunnusNro) {
           chooserSarjat.clear();
         
+          int k = tarinahakuKentta.getSelectionModel().getSelectedIndex();
+          String ehto = tarinaHaku.getText(); 
+          if (k > 0 || ehto.length() > 0)
+              naytaVirhe(String.format("Ei osata hakea (kenttä: %d, ehto: %s)", k, ehto));
+          else
+              naytaVirhe(null);
+          
+          chooserSarjat.clear();
+
           int index = 0;
-          Sarja sarja;
-          for (int i = 0;i<tarinatilasto.getSarjojenPituus();i++) {
-              try {
-                  sarja = tarinatilasto.annaSarja(i);
-              }catch (IndexOutOfBoundsException e) {
-                  continue;
+          Collection<Sarja> Sarjat;
+          try {
+              Sarjat = tarinatilasto.etsiSarja(ehto);
+              int i = 0;
+              for (Sarja Sarja:Sarjat) {
+                  if (Sarja.getTunnusNro() == tunnusNro) index = i;
+                  chooserSarjat.add(Sarja.getNimi(), Sarja);
+                  i++;
               }
-              if(sarja.getTunnusNro() == tunnusNro) index=i;
-              chooserSarjat.add(sarja.getNimi(), sarja);
-          }       
+          } catch (SailoException ex) {
+              Dialogs.showMessageDialog("Sarjan hakemisessa ongelmia! " + ex.getMessage());
+          }
           chooserSarjat.setSelectedIndex(index);       
       }
 
@@ -482,7 +508,10 @@ public class TarinatilastoGUIController implements Initializable {
           }
           int k = tarinahakuKentta.getSelectionModel().getSelectedIndex() + aputarina.ekaKentta();
           String ehto = tarinaHaku.getText();
-          if (ehto.indexOf('*') < 0) ehto = "*" + ehto + "*";
+          if (k > 0 || ehto.length() > 0)
+              naytaVirhe(String.format("Ei osata hakea (kenttä: %d, ehto: %s)", k, ehto));
+          else
+              naytaVirhe(null);
         
           chooserTarinat.clear();
           sarjaKohdalla = chooserSarjat.getSelectedObject();
@@ -490,44 +519,20 @@ public class TarinatilastoGUIController implements Initializable {
           Collection<Tarina> tarinat;
           int index = 0;
           
-          if(k>aputarina.getKenttia()-1) {
-              k = k-(aputarina.getKenttia()-aputarina.ekaKentta()-apuosa.ekaKentta());
-              try {
-                  Collection<Osa> osat = tarinatilasto.etsiOsa(ehto, k);
-                  List<Integer> tarinaIDt = new ArrayList<>();
-                  for (Osa osa:osat) {
-                      int ID = osa.getTarinaNro();
-                      if(eiOle(ID, tarinaIDt)) tarinaIDt.add(ID);
-                  }
-                  Collections.sort(tarinaIDt);
-                  k = 1;
-                  tarinat = tarinatilasto.etsiTarina(tarinaIDt, k);
-                  int i = 0;
-                  for (Tarina tarina:tarinat) {
-                      if (tarina.getIdNumero() == tnro) index = i;
-                      if(tarina.getSarjaNumero() == sarjaKohdalla.getTunnusNro()) chooserTarinat.add(tarina.getAvain(1), tarina);
-                      i++;
-                      }
-              
-                  }catch(SailoException ex) {
-                      Dialogs.showMessageDialog("Tarinan hakemisessa ongelmia! " + ex.getMessage());
-                  }
+          try {
+              tarinat = tarinatilasto.etsiTarina(ehto, k);
+              int i = 0;
+              for (Tarina tarina:tarinat) {
+                  if (tarina.getIdNumero() == tnro) index = i;
+                  chooserTarinat.add(tarina.getNimi(), tarina);
+                  i++;
               }
-              else {
-                  try {
-                      tarinat = tarinatilasto.etsiTarina(ehto, k);
-                      int i = 0;
-                      for (Tarina tarina:tarinat) {
-                          if (tarina.getIdNumero() == tnro) index = i;
-                          if(tarina.getSarjaNumero() == sarjaKohdalla.getTunnusNro()) chooserTarinat.add(tarina.getAvain(1), tarina);
-                          i++;
-                      }
                   } catch (SailoException ex) {
                       Dialogs.showMessageDialog("Tarinan hakemisessa ongelmia! " + ex.getMessage());
                   }
-              }
+              
               chooserTarinat.setSelectedIndex(index);
-          }
+      }
       
       
           private boolean eiOle(int iD, List<Integer> lista) {
@@ -591,12 +596,13 @@ public class TarinatilastoGUIController implements Initializable {
                   if (uusi == null) return;
                   uusi.rekisteroi();
                   tarinatilasto.lisaa(uusi);
-                  naytaOsat(tarinaKohdalla);
-                  osaGrid.selectRow(1000);
+                  //naytaOsat(tarinaKohdalla);
+                  //osaGrid.selectRow(1000);
               }catch (SailoException e)
               {
                   Dialogs.showMessageDialog("Lisääminen epäonnistui: " + e.getMessage()); 
               }
+              haeTarina(tarinaKohdalla.getIdNumero());
           }
         
         
@@ -611,6 +617,7 @@ public class TarinatilastoGUIController implements Initializable {
               try {
                   Tarina uusi = new Tarina();
                   uusi = TarinatilastoTietuemuokkausController.kysyTietue(null, uusi, 1, sarjaKohdalla.getNimi());
+                  if(uusi == null) return;
                   uusi.rekisteroi();
                   uusi.aseta(2,sarjaKohdalla.getTunnusNro()+"");
                   tarinatilasto.lisaa(uusi);
@@ -625,12 +632,12 @@ public class TarinatilastoGUIController implements Initializable {
           /**
            * Poistetaan osien taulukosta valittu osa.
            */
-          private void poistaOsa() {
+/*         private void poistaOsa() {
               int rivi = osaGrid.getRowNr();
               if (rivi < 0) return;
               Osa osa = osaGrid.getObject();
               if ( osa == null) return;
-              tarinatilasto.poistaOsa(osa);
+              tarinatilasto.poistaTarinanOsa(osa);
               naytaOsat(tarinaKohdalla);
               int osia = osaGrid.getItems().size();
               if (rivi >= osia) rivi = osia - 1;
@@ -643,7 +650,7 @@ public class TarinatilastoGUIController implements Initializable {
               Tarina tarina = tarinaKohdalla;
               if (tarina == null) return;
               if (!Dialogs.showQuestionDialog("Poisto", "Poistetaanko tarina: " + tarina.getAvain(1) + "?", "Kyllä", "Ei")) return;
-              tarinatilasto.poistaTarina(tarina);
+              tarinatilasto.poista(tarina);
               int index = chooserTarinat.getSelectedIndex();
               haeTarina(0);
               chooserTarinat.setSelectedIndex(index);
@@ -658,7 +665,7 @@ public class TarinatilastoGUIController implements Initializable {
               for (int i = 0;i<tarinatilasto.getTarinoita();i++) {
                   Tarina tarina = tarinatilasto.annaTarina(i);
                   if (tarina.getIdNumero() == sarjaID) {
-                      tarinatilasto.poistaTarina(tarina);
+                      tarinatilasto.poista(tarina);
                       i--;
                   }
               }
@@ -668,7 +675,7 @@ public class TarinatilastoGUIController implements Initializable {
               chooserSarjat.setSelectedIndex(index);
               haeTarina(0);
           }
-        
+ */       
           
           /**
            * Näytetään Tarinatilaston suunnitelma erillisessä selaimessa.

@@ -41,6 +41,7 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
             naytaVirhe("Ei saa olla tyhjä!");
             return;
         }
+        palautettava = tietueKohdalla;
         ModalController.closeStage(labelVirhe);
     }  
  
@@ -57,6 +58,8 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
     private static String sarjaNimi = null;
     private TextField[] edits;
     private int kentta = 0;
+    
+    private TYPE palautettava;
  
      
      /**
@@ -157,7 +160,7 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
 
      @Override
      public TYPE getResult() {
-         return tietueKohdalla;
+         return palautettava;
      }
 
      

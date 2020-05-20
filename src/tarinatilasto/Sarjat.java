@@ -1,14 +1,47 @@
 package tarinatilasto;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
-import fi.jyu.mit.ohj2.WildChars;
+import static tarinatilasto.Kanta.alustaKanta;
+
+
+/*
+ * Alustuksia ja puhdistuksia testiä varten
+ * @example
+ * <pre name="testJAVA">
+ * #import java.io.*;
+ * #import java.util.*;
+ * 
+ * private Sarjat sarjat;
+ * private String tiedNimi;
+ * private File ftied;
+ * 
+ * @Before
+ * public void alusta() throws SailoException { 
+ *    tiedNimi = "testitarinat";
+ *    ftied = new File(tiedNimi+".db");
+ *    ftied.delete();
+ *    sarjat = new Sarjat(tiedNimi);
+ * }   
+ *
+ * @After
+ * public void siivoa() {
+ *    ftied.delete();
+ * }   
+ * </pre>
+ */ 
+
 
 /**
  * Sarjojen luokka, joka osaa mm. tallentaa sarjojen tiedot.
  * @author Janne Taipalus ja Noora Jokela
- * @version 2.5.2019
+ * @version 19.5.2020
  *
  */
 public class Sarjat implements Iterable<Sarja> {
@@ -18,6 +51,41 @@ public class Sarjat implements Iterable<Sarja> {
     private int lkm = 0;
     private String tiedostonNimi = "";
     private Sarja alkiot[] = new Sarja[MAX_SARJOJA];
+    
+    private Kanta kanta;
+    private static Sarja apusarja = new Sarja();
+    
+    
+    
+    /**
+     * Tarkistetaan, että kannassa on sarjojen tarvitsema taulu
+     * @param nimi Tietokannan nimi
+     * @throws SailoException jos jokin menee pieleen
+     */
+    public Sarjat(String nimi) throws SailoException {
+        kanta = alustaKanta(nimi);
+        try ( Connection con = kanta.annaKantayhteys() ) {
+            // Hankitaan tietokannan metadata ja tarkistetaaan siitä,
+            // onko Sarjat-nimistä taulua olemassa.
+            // Jos ei ole, luodaan se. Ei puututa siihen, onko
+            // mahdollisesti olemassa olevalla taululla oikea rakenne.
+            // Käyttäjä saa kuulla siitä virheilmoituksen kautta.
+            DatabaseMetaData meta = con.getMetaData();
+            
+            try ( ResultSet taulu = meta.getTables(null, null, "Sarjat", null) ) {
+                if ( !taulu.next() ) {
+                    // Luodaan Sarjat-taulu
+                    try ( PreparedStatement sql = con.prepareStatement(apusarja.annaLuontilauseke()) ) {
+                        sql.execute();
+                    }
+                }
+            }
+            
+        } catch ( SQLException e ) {
+            throw new SailoException (e.getMessage());
+        }
+    }
+    
     
     
     /**
@@ -87,27 +155,46 @@ public class Sarjat implements Iterable<Sarja> {
     /**
      * Lisää uuden sarjan tietorakenteeseen.
      * @param sarja Sarjan nimi.
+     * @throws SailoException  jos tietorakenne on jo täynnä
      * @example
      * <pre name="test">
-     *  Sarjat sarjat = new Sarjat();
-     *  Sarja testi1 = new Sarja(), testi2 = new Sarja();
-     *  sarjat.getLkm() === 0;
-     *  sarjat.lisaa(testi1); sarjat.getLkm() === 1;
-     *  sarjat.lisaa(testi2); sarjat.getLkm() === 2;
-     *  sarjat.lisaa(testi1); sarjat.getLkm() === 3;
-     *  sarjat.anna(0) === testi1;
-     *  sarjat.anna(1) === testi2;
-     *  sarjat.anna(2) === testi1;
-     *  sarjat.anna(1) == testi1 === false;
-     *  sarjat.anna(1) == testi2 === true;
-     *  sarjat.anna(3) === testi1; #THROWS IndexOutOfBoundsException
-     * </pre>
-     */
-    public void lisaa(Sarja sarja){
-        if (lkm >= alkiot.length) alkiot = Arrays.copyOf(alkiot, alkiot.length+10);
-        alkiot[lkm] = sarja;
-        lkm++;
-        muutettu = true;
+      * #THROWS SailoException 
+      * 
+      * Collection<Sarja> loytyneet = sarjat.etsi("", 1);
+      * loytyneet.size() === 0;
+      * 
+      * Sarja sarja1 = new Sarja(), sarja2 = new Sarja();
+      * sarjat.lisaa(sarja1); 
+      * sarjat.lisaa(sarja2);
+      *  
+      * loytyneet = sarjat.etsi("", 1);
+      * loytyneet.size() === 2;
+      * 
+      * // Unique constraint ei hyväksy
+      * sarjat.lisaa(sarja1); #THROWS SailoException
+      * Sarja sarja3 = new Sarja(); Sarja sarja4 = new Sarja(); Sarja sarja5 = new Sarja();
+      * sarjat.lisaa(sarja3);
+      * sarjat.lisaa(sarja4);
+      * sarjat.lisaa(sarja5);
+ 
+      * loytyneet = sarjat.etsi("", 1);
+      * loytyneet.size() === 5;
+      * Iterator<Sarja> i = loytyneet.iterator();
+      * i.next() === sarja1;
+      * i.next() === sarja2;
+      * i.next() === sarja3;
+      * </pre>
+      */
+     public void lisaa(Sarja sarja) throws SailoException {
+         try ( Connection con = kanta.annaKantayhteys(); PreparedStatement sql = sarja.annaLisayslauseke(con) ) {
+             sql.executeUpdate();
+             try ( ResultSet rs = sql.getGeneratedKeys() ) {
+                sarja.tarkistaId(rs);
+             }   
+             
+         } catch (SQLException e) {
+             throw new SailoException("Ongelmia tietokannan kanssa:" + e.getMessage());
+         }
     }   
     
     
@@ -259,7 +346,7 @@ public class Sarjat implements Iterable<Sarja> {
         
         
         /**
-         * Annetaan seuraava jäsen.
+         * Annetaan seuraava sarja.
          * @throws NoSuchElementException jos seuraavaa alkiota ei ole.
          * @see java.util.Iterator#next()
          */
@@ -295,7 +382,11 @@ public class Sarjat implements Iterable<Sarja> {
                 return;
             }
         }
-        lisaa(sarja);
+        try {
+            lisaa(sarja);
+        } catch (SailoException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -310,19 +401,84 @@ public class Sarjat implements Iterable<Sarja> {
     
     
     /**
-     * @param hakuehto Hakuehto.
-     * @param k Etsittävän kentän indeksi
-     * @return Tietorakenne löytyneistä jäsenistä.
+     * Palauttaa sarjat listassa
+     * @param hakuehto hsarjaehto  
+     * @param k etsittävän kentän indeksi 
+     * @return sarjat listassa
+     * @throws SailoException jos tietokannan kanssa ongelmia
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * Sarja sarja1 = new Sarja(); sarja1.vastaasarjaAnkka(); 
+     * Sarja sarja2 = new Sarja(); sarja2.vastaasarjaAnkka(); 
+     * Sarjat.lisaa(sarja1);
+     * Sarjat.lisaa(sarja2);
+     * Sarjat.lisaa(sarja2);  #THROWS SailoException  // ei saa lisätä sama id:tä uudelleen
+     * Collection<Sarja> loytyneet = Sarjat.etsi(sarja1.getNimi(), 1);
+     * loytyneet.size() === 1;
+     * loytyneet.iterator().next() === sarja1;
+     * loytyneet = Sarjat.etsi(sarja2.getNimi(), 1);
+     * loytyneet.size() === 1;
+     * loytyneet.iterator().next() === sarja2;
+     * loytyneet = Sarjat.etsi("", 15); #THROWS SailoException
+     *
+     * ftied.delete();
+     * </pre>
      */
-    public Collection<Sarja> etsi(String hakuehto, int k) {
-        String ehto = "*";
-        if (hakuehto != null && hakuehto.length() > 0 ) ehto = hakuehto;
-        int hk = k;
-        if (hk < 0) hk = 1;
-        Collection<Sarja> loytyneet = new ArrayList<Sarja>();
-        for (Sarja sarja : this) {
-            if (WildChars.onkoSamat(sarja.getNimi(), ehto)) loytyneet.add(sarja);
+    public Collection<Sarja> etsi(String hakuehto, int k) throws SailoException {
+        String ehto = hakuehto;
+        String kysymys = apusarja.getKysymys(k);
+        if ( k < 0 ) { kysymys = apusarja.getKysymys(0); ehto = ""; }
+        // Avataan yhteys tietokantaan try .. with lohkossa.
+        try ( Connection con = kanta.annaKantayhteys();
+              PreparedStatement sql = con.prepareStatement("SELECT * FROM Sarjat WHERE " + kysymys + " LIKE ?") ) {
+            ArrayList<Sarja> loytyneet = new ArrayList<Sarja>();
+            
+            sql.setString(1, "%" + ehto + "%");
+            try ( ResultSet tulokset = sql.executeQuery() ) {
+                while ( tulokset.next() ) {
+                    Sarja j = new Sarja();
+                    j.parse(tulokset);
+                    loytyneet.add(j);
+                }
+            }
+            return loytyneet;
+        } catch ( SQLException e ) {
+            throw new SailoException("Ongelmia tietokannan kanssa:" + e.getMessage());
         }
-        return loytyneet;
     }
+
+
+/**
+ * Testiohjelma sarjoille
+ * @param args ei käytössä
+ */
+public static void main(String args[])  {
+    try {
+        new File("kokeilu.db").delete();
+        Sarjat Sarjat = new Sarjat("kokeilu");
+
+        Sarja sarja1 = new Sarja(), sarja2 = new Sarja();
+        sarja2.lisaaTiedot();
+        //sarja2.rekisteroi();
+        sarja2.lisaaTiedot();
+        
+        Sarjat.lisaa(sarja1);
+        Sarjat.lisaa(sarja2);
+        sarja2.tulosta(System.out);
+        
+        System.out.println("============= Sarjat testi =================");
+
+        int i = 0;
+        for (Sarja Sarja:Sarjat.etsi("", -1)) {
+            System.out.println("Sarja nro: " + i++);
+            Sarja.tulosta(System.out);
+        }
+        
+        new File("kokeilu.db").delete();
+    } catch ( SailoException ex ) {
+        System.out.println(ex.getMessage());
+    }
+}
+
 }

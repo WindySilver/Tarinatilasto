@@ -27,7 +27,7 @@ public class Sarja implements Cloneable {
      */
     public String annaLuontilauseke() {
         return "CREATE TABLE Sarjat (" +
-                "tunnusNro INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tunnusNro INTEGER PRIMARY KEY AUTOINCREMENT , " +
                 "nimi VARCHAR (100) NOT NULL" +
                 ")";
     }
@@ -163,6 +163,7 @@ public class Sarja implements Cloneable {
      */
     public void lisaaTiedot() {
         nimi = "Testaussarja";
+        rekisteroi();
     }
     
     
@@ -278,5 +279,19 @@ public class Sarja implements Cloneable {
         
         series.tulosta(System.out);
         batman.tulosta(System.out);
+    }
+
+
+    /**
+     * Palauttaa k:tta sarjan kenttää vastaavan kysymyksen.
+     * @param k Kuinka monennen kentän kysymys palautetaan.
+     * @return K:netta kenttää vastaava kysymys.
+     */
+    public String getKysymys(int k) {
+        switch (k) {
+        case 0: return "tunnusNro";
+        case 1: return "nimi";
+        default: return "Ääliö";
+        }
     }
 }

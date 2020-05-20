@@ -43,11 +43,11 @@ public class Tarina implements Cloneable, Tietue {
                 "sarjaID INTEGER NOT NULL, " +
                 "tekija VARCHAR(100), " +
                 "kieli VARCHAR(100), " +
-                "sanamaara DOUBLE, " +
+                "sanamaara DOUBLE , " +
                 "osienMaara DOUBLE, " +
                 "sivumaara INTEGER, " +
                 "julkaisut VARCHAR(100), " +
-                "lisatietoja VARCHAR(5000), " +
+                "lisatietoja VARCHAR(100)" +
                 ")";
     }
     
@@ -336,6 +336,14 @@ public class Tarina implements Cloneable, Tietue {
      */
     public double getSanamaara() {
         return sanamaara;
+    }
+    
+    
+    /**
+     * @return Tarinan nimi.
+     */
+    public String getNimi() {
+        return nimi;
     }
 
 

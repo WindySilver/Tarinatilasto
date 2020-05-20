@@ -1,9 +1,16 @@
 package tarinatilasto;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import fi.jyu.mit.ohj2.WildChars;
+import static tarinatilasto.Kanta.alustaKanta;
+
 
 /**
  * Tarinatilaston osat-luokka, joka osaa mm. lisätä uuden osan.
@@ -16,6 +23,60 @@ public class Osat implements Iterable<Osa> {
     private boolean muutettu = false;
     private final List<Osa> alkiot = new ArrayList<Osa>();
    
+    private Kanta kanta;
+    private static Osa apuosa = new Osa();
+
+    
+    /*
+     * Alustuksia ja puhdistuksia testiä varten
+     * @example
+     * <pre name="testJAVA">
+     * #import java.io.*;
+     * #import java.util.*;
+     * 
+     * private Osat osat;
+     * private String tiedNimi;
+     * private File ftied;
+     * 
+     * @Before
+     * public void alusta() throws SailoException { 
+     *    tiedNimi = "testitarinat";
+     *    ftied = new File(tiedNimi+".db");
+     *    ftied.delete();
+     *    jasenet = new Jasenet(tiedNimi);
+     * }   
+     *
+     * @After
+     * public void siivoa() {
+     *    ftied.delete();
+     * }   
+     * </pre>
+     */ 
+    
+    
+    /**
+     * Tarkistetaan, että kannassa osien tarvitsema taulu
+     * @param nimi tietokannan nimi
+     * @throws SailoException jos jokin menee pieleen
+     */
+    public Osat(String nimi) throws SailoException {
+        kanta = alustaKanta(nimi);
+        try ( Connection con = kanta.annaKantayhteys() ) {
+            DatabaseMetaData meta = con.getMetaData();
+            try ( ResultSet taulu = meta.getTables(null, null, "Osat", null) ) {
+                if ( !taulu.next() ) {
+                    // Luodaan Osat-taulu
+                    try ( PreparedStatement sql = con.prepareStatement(apuosa.annaLuontilauseke()) ) {
+                        sql.execute();
+                    }
+                }
+            }
+                
+        } catch ( SQLException e ) {
+            throw new SailoException(e.getMessage());
+        }
+    }
+    
     
     /**
      * Osien alustaminen.
@@ -35,12 +96,23 @@ public class Osat implements Iterable<Osa> {
     
     
     /**
-     * Lisää uuden osan tietorakenteeseen. Ottaa osan omistukseensa.
-     * @param osa Lisättävä osa.
+     * Listään uusi osa tarinatilastoon
+     * @param osa lisättävä osa
+     * @throws SailoException jos tietokantayhteyden kanssa ongelmia
+     * @example
+     * <pre name="test">
+     * #THROWS SailoException
+     * </pre>
      */
-    public void lisaa(Osa osa) {
-        alkiot.add(osa);
-        muutettu = true;
+    public void lisaa(Osa osa) throws SailoException {
+        try ( Connection con = kanta.annaKantayhteys(); PreparedStatement sql = osa.annaLisayslauseke(con) ) {
+            sql.executeUpdate();
+            try ( ResultSet rs = sql.getGeneratedKeys() ) {
+                osa.tarkistaId(rs);
+             }   
+        } catch (SQLException e) {
+            throw new SailoException("Ongelmia tietokannan kanssa:" + e.getMessage());
+        }
     }
     
     
@@ -294,65 +366,85 @@ public class Osat implements Iterable<Osa> {
      * Haetaan kaikki tarinan osat.
      * @param tunnusnro Tunnusnumero tarinalle jonka osia haetaan.
      * @return Tietorakenne jossa on viitteet löydettyihin osiin.
+     * @throws SailoException jos jotain menee pieleen
      * @example
      * <pre name="test">
-     * #import java.util.*;
-     * 
-     * Osat osat = new Osat();
-     * Osa testi11 = new Osa(2); osat.lisaa(testi11);
-     * Osa testi25 = new Osa(1); osat.lisaa(testi25);
-     * Osa testi15 = new Osa(2); osat.lisaa(testi15);
-     * Osa testi09 = new Osa(1); osat.lisaa(testi09);
-     * Osa testi99 = new Osa(2); osat.lisaa(testi99);
-     * Osa testi13 = new Osa(5); osat.lisaa(testi13);
-     * 
-     * List<Osa> loytyneet;
-     * loytyneet = osat.annaOsat(3);
-     * loytyneet.size() === 0;
-     * loytyneet = osat.annaOsat(1);
-     * loytyneet.size() === 2;
-     * loytyneet.get(0) == testi25 === true;
-     * loytyneet.get(1) == testi09 === true;
-     * loytyneet = osat.annaOsat(5);
-     * loytyneet.size() === 1;
-     * loytyneet.get(0) == testi13 === true;
-     * </pre>
-     */
-    public List<Osa> annaOsat(int tunnusnro) {
+      * #THROWS SailoException
+      *  
+      *  Osa osa21 = new Osa(2); osa21.lisaaTiedot(2); osat.lisaa(osa21);
+      *  Osa osa11 = new Osa(1); osa11.lisaaTiedot(1); osat.lisaa(osa11);
+      *  Osa osa22 = new Osa(2); osa22.lisaaTiedot(2); osat.lisaa(osa22);
+      *  Osa osa12 = new Osa(1); osa12.lisaaTiedot(1); osat.lisaa(osa12);
+      *  Osa osa23 = new Osa(2); osa23.lisaaTiedot(2); osat.lisaa(osa23);
+      *  Osa osa51 = new Osa(5); osa51.lisaaTiedot(5); osat.lisaa(osa51);
+      *  
+      *  
+      *  List<Osa> loytyneet;
+      *  loytyneet = osat.annaOsat(3);
+      *  loytyneet.size() === 0; 
+      *  loytyneet = osat.annaOsat(1);
+      *  loytyneet.size() === 2; 
+      *  
+      *  loytyneet.get(0) === osa11;
+      *  loytyneet.get(1) === osa12;
+      *  
+      *  loytyneet = osat.annaOsat(5);
+      *  loytyneet.size() === 1; 
+      *  loytyneet.get(0) === osa51;
+      * </pre> 
+      */
+     public List<Osa> annaOsat(int tunnusnro) throws SailoException {
         List<Osa> loydetyt = new ArrayList<Osa>();
-        for(Osa osa : alkiot)
-            if (osa.getTarinaNro() == tunnusnro) loydetyt.add(osa);
-        return loydetyt;
-    }
-    
-    
-    /**
-     * Testiohjelma osille.
-     * @param args Ei käytössä
-     */
-    public static void main(String[] args) {
-        Osat osat = new Osat();
-        Osa osa1 = new Osa();
-        osa1.lisaaTiedot(1);
-        Osa osa2 = new Osa();
-        osa2.lisaaTiedot(1);
-        Osa osa3 = new Osa();
-        osa3.lisaaTiedot(2);
-        Osa osa4 = new Osa();
-        osa4.lisaaTiedot(2);
         
-        osat.lisaa(osa1);
-        osat.lisaa(osa2);
-        osat.lisaa(osa3);
-        osat.lisaa(osa4);
-        
-        System.out.println("======================Osat testi======================");
-        
-        List<Osa> osat2 = osat.annaOsat(2);
-        
-        for (Osa osa : osat2) {
-            System.out.println(osa.getTarinaNro() + " ");
-            osa.tulosta(System.out);
+        try ( Connection con = kanta.annaKantayhteys();
+              PreparedStatement sql = con.prepareStatement("SELECT * FROM Osat WHERE tunnusNro = ?")
+                ) {
+            sql.setInt(1, tunnusnro);
+            try ( ResultSet tulokset = sql.executeQuery() )  {
+                while ( tulokset.next() ) {
+                    Osa osa = new Osa();
+                    osa.parse(tulokset);
+                    loydetyt.add(osa);
+                }
+            }
+            
+        } catch (SQLException e) {
+            throw new SailoException("Ongelmia tietokannan kanssa:" + e.getMessage());
         }
-    }
-}
+        return loydetyt;
+     }
+    
+    
+     /**
+      * Testiohjelma osille
+      * @param args ei käytössä
+      */
+     public static void main(String args[])  {
+         try {
+             new File("kokeilu.db").delete();
+             Osat Osat = new Osat("kokeilu");
+     
+             Osa sarja1 = new Osa(), sarja2 = new Osa();
+             sarja1.lisaaTiedot(2);
+             //sarja2.rekisteroi();
+             sarja2.lisaaTiedot(1);
+             
+             Osat.lisaa(sarja1);
+             Osat.lisaa(sarja2);
+             sarja2.tulosta(System.out);
+             
+             System.out.println("============= Osat testi =================");
+ 
+             int i = 0;
+             for (Osa Osa:Osat.etsi("", -1)) {
+                 System.out.println("Jäsen nro: " + i++);
+                 Osa.tulosta(System.out);
+             }
+             
+             new File("kokeilu.db").delete();
+         } catch ( SailoException ex ) {
+             System.out.println(ex.getMessage());
+         }
+     }
+ 
+ }
