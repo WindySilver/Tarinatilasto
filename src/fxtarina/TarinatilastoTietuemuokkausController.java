@@ -3,7 +3,6 @@ package fxtarina;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import fi.jyu.mit.fxgui.ComboBoxChooser;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
@@ -16,12 +15,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import tarinatilasto.Sarja;
 import tarinatilasto.Tietue;
 
 /**
  * @author Janne Taipalus ja Noora Jokela
- * @version 24.7.2019
+ * @version 20.5.2020
  * @param <TYPE> Minkä tyyppisiä olioita käsitellään
  *
  */
@@ -43,6 +41,7 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
             naytaVirhe("Ei saa olla tyhjä!");
             return;
         }
+        palautettava = tietueKohdalla;
         ModalController.closeStage(labelVirhe);
     }  
  
@@ -59,6 +58,8 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
     private static String sarjaNimi = null;
     private TextField[] edits;
     private int kentta = 0;
+    
+    private TYPE palautettava;
  
      
      /**
@@ -159,7 +160,7 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
 
      @Override
      public TYPE getResult() {
-         return tietueKohdalla;
+         return palautettava;
      }
 
      

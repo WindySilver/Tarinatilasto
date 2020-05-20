@@ -8,7 +8,7 @@ import fi.jyu.mit.ohj2.WildChars;
 /**
  * Sarjojen luokka, joka osaa mm. tallentaa sarjojen tiedot.
  * @author Janne Taipalus ja Noora Jokela
- * @version 2.5.2019
+ * @version 20.5.2020
  *
  */
 public class Sarjat implements Iterable<Sarja> {
@@ -259,7 +259,7 @@ public class Sarjat implements Iterable<Sarja> {
         
         
         /**
-         * Annetaan seuraava jäsen.
+         * Annetaan seuraava sarja.
          * @throws NoSuchElementException jos seuraavaa alkiota ei ole.
          * @see java.util.Iterator#next()
          */

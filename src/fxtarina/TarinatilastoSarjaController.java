@@ -15,13 +15,14 @@ import tarinatilasto.Sarja;
 
 /**
  * @author Noora Jokela ja Janne Taipalus
- * @version 2.5.2019
+ * @version 20.5.2020
  *
  */
 public class TarinatilastoSarjaController implements ModalControllerInterface<Sarja>, Initializable {
 
     @FXML private TextField editNimi;
     @FXML private Label labelVirhe;
+    private Sarja palautettava;
     
     
     @Override
@@ -35,12 +36,12 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
             naytaVirhe("Nimi ei saa olla tyhjä!");
             return;
         }
+        palautettava = sarjaKohdalla;
         ModalController.closeStage(labelVirhe);
     }
     
     
     @FXML private void handleCancel() {
-        sarjaKohdalla = null;
         ModalController.closeStage(labelVirhe);
     }
 
@@ -95,7 +96,7 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
     
     @Override
     public Sarja getResult() {
-        return sarjaKohdalla;
+        return palautettava;
     }
     
     @Override
