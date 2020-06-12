@@ -16,7 +16,7 @@ public class Osa implements Cloneable, Tietue {
     private String nimi = "";
     private double sanamaara;
     private int numero;
-    private int sivumaara;
+    private double sivumaara;
     
     private static int seuraavaNro = 0;
     

@@ -21,7 +21,7 @@ public class Tarina implements Cloneable, Tietue {
     private String kieli= "";
     private double sanamaara = 0;
     private double osienMaara =0;
-    private int    sivumaara = 0;
+    private double sivumaara = 0;
     private String julkaisut = "";
     private String lisatietoja = "";
     
@@ -258,7 +258,7 @@ public class Tarina implements Cloneable, Tietue {
     /**
      * @return Tarinan sivumäärä.
      */
-    public int getSivumaara() {
+    public double getSivumaara() {
         return sivumaara;
     }
 
