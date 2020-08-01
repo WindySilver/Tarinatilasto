@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 
 <?import fi.jyu.mit.fxgui.ComboBoxChooser?>
 <?import fi.jyu.mit.fxgui.ListChooser?>
@@ -195,7 +194,6 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Apua">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleApua" text="Apua" />
                   <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Tietoja..." />
                   <MenuItem mnemonicParsing="false" onAction="#handleOhjeet" text="Ohjeita..." />
             </items>

@@ -2,8 +2,9 @@
 
 Ohjelmointi 2 2019 kevät harjoitustyö (siirretty valmiina Githubiin toisesta versiohallinnasta)
 
-To-do:
+The version with the English UI is in the branch En_UI.
 
-    Englanninkielinen käännös
+# Kuinka käynnistän
 
-The Finnish version of Story Statistics. The English version of this is on my to-do list.
+Käynnistääksesi tämän ohjelman sinulla ptää olla JavaFX asennettuna koneellasi. Voit käynnistää Tarinatilaston päätteeltä (tai käyttöjärjestelmäsi vastaavalta) tällä komennolla:
+java --module-path JAVAFXNSIJAINTIKONEELLASI --add-modules=javafx.controls,javafx.fxml,javafx.base,javafx.media,javafx.web,javafx.swing -jar TARINATILASTONJARTIEDOSTONSIJAINTIKONEELLASI

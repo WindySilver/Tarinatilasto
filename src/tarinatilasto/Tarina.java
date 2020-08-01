@@ -9,7 +9,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Luokka tarinalle.
  * @author Noora Jokela ja Janne Taipalus
- * @version 6.7.2019
+ * @version 1.8.2020
  *
  */
 public class Tarina implements Cloneable, Tietue {
@@ -351,7 +351,7 @@ public class Tarina implements Cloneable, Tietue {
                 osienMaara = Mjonot.erotaEx(sb, '§', getOsienMaara());
             }catch (NumberFormatException e)
             {
-                return "Osien mmäärä on väärin " + e.getMessage();
+                return "Osien määrä on väärin " + e.getMessage();
             }
             return null;
         case 7:

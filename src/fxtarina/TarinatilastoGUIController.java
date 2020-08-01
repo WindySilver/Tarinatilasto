@@ -38,7 +38,7 @@ import javafx.scene.control.TableView;
 /**
  * Luokka käyttöliittymän tapahtumien hoitamiseksi
  * @author Noora Jokela & Janne Taipalus
- * @version 2.5.2019
+ * @version 1.8.2020
  */
 public class TarinatilastoGUIController implements Initializable {
     
@@ -140,6 +140,8 @@ public class TarinatilastoGUIController implements Initializable {
         }
 
         
+        //Poistettu käytöstä, koska komento jumittaa ohjelman ainakin Ubuntu 18.04:llä
+        //ja sen avaamasta TIM-sivusta ei ole enää paljoakaan hyötyä, koska se vaatii kirjautumisen.
         @FXML private void handleApua() {
               apua();
         }
