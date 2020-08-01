@@ -14,25 +14,25 @@
    <center>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" styleClass="tietoja" stylesheets="@tarinatilasto.css" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="TOP_CENTER" text="Tarinatilasto" underline="true">
+            <Label alignment="TOP_CENTER" text="Story Statistics" underline="true">
                <font>
                   <Font name="Bell MT Bold" size="40.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin></Label>
-                  <Label alignment="CENTER" text="Versio 1.2">
+                  <Label alignment="CENTER" text="Version 1.2">
                <font>
                   <Font name="Arial" size="25.0" />
                </font></Label>
-      <Label alignment="BOTTOM_CENTER" text="Noora Jokela ja Janne Taipalus" textAlignment="CENTER">
+      <Label alignment="BOTTOM_CENTER" text="Noora Jokela and Janne Taipalus" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
                <font>
                   <Font name="Belwe Lt BT Light" size="30.0" />
                </font></Label>
-            <Label alignment="CENTER" text="Windows: Anna kansion nimi suhteessa käynnistyskansioon.&#10;Linux: Anna kansion koko osoite (esim. /home/käyttäjänimi/Tarinat)" wrapText="true">
+            <Label alignment="CENTER" text="Windows: Give the folder's location in relation to the folder this was launched from.&#10;Linux: Give the folder's full location (e.g. /home/username/stories)." wrapText="true">
                <padding>
                   <Insets top="20.0" />
                </padding>
@@ -45,7 +45,7 @@
          <children>
             <HBox fillHeight="false">
                <children>
-                  <Label text="Anna kansion nimi:">
+                  <Label text="Give the folder's name">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
@@ -69,7 +69,7 @@
             <ButtonBar>
               <buttons>
                   <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="OK" />
-                <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
+                <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
               </buttons>
                <VBox.margin>
                   <Insets bottom="10.0" right="10.0" />

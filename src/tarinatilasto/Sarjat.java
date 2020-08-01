@@ -8,7 +8,7 @@ import fi.jyu.mit.ohj2.WildChars;
 /**
  * Sarjojen luokka, joka osaa mm. tallentaa sarjojen tiedot.
  * @author Janne Taipalus ja Noora Jokela
- * @version 20.5.2020
+ * @version 30.7.2020
  *
  */
 public class Sarjat implements Iterable<Sarja> {
@@ -174,9 +174,9 @@ public class Sarjat implements Iterable<Sarja> {
             muutettu = false;
         }catch (FileNotFoundException e)
         {
-            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea!");
+            throw new SailoException("The file " + getTiedostonNimi() + " doesn't open!");
         }catch (IOException e) {
-            throw new SailoException ("Ongelmia tiedoston kanssa: " + e.getMessage());
+            throw new SailoException ("Problems with the file: " + e.getMessage());
         }
     }
     
@@ -194,14 +194,14 @@ public class Sarjat implements Iterable<Sarja> {
         ftied.renameTo(fbak);
         
         try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
-            fo.println(";sid|nimi|");
+            fo.println(";seid|name|");
             for (Sarja sarja : this) {
                 fo.println(sarja.toString());
             }
         } catch (FileNotFoundException e) {
-            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea!");
+            throw new SailoException("The file " + ftied.getName() + " doesn't open!");
         } catch (IOException e) {
-            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+            throw new SailoException("Pproblems with writing into the file  " + ftied.getName());
         }
         muutettu = false;
     }
@@ -232,7 +232,7 @@ public class Sarjat implements Iterable<Sarja> {
      * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella.
      */
     public Sarja anna(int i) throws IndexOutOfBoundsException {
-        if (i<0||i>= lkm) throw new IndexOutOfBoundsException("Virheellinen indeksi: " + i);
+        if (i<0||i>= lkm) throw new IndexOutOfBoundsException("Incorrect index: " + i);
         return alkiot[i];
     }
 
@@ -265,7 +265,7 @@ public class Sarjat implements Iterable<Sarja> {
          */
         @Override
         public Sarja next() throws NoSuchElementException {
-            if (!hasNext()) throw new NoSuchElementException("Ei ole");
+            if (!hasNext()) throw new NoSuchElementException("Doesn't exist");
             return anna(kohdalla++);
         }
         
@@ -277,7 +277,7 @@ public class Sarjat implements Iterable<Sarja> {
          */
         @Override
         public void remove() throws UnsupportedOperationException {
-            throw new UnsupportedOperationException("Ei poisteta");
+            throw new UnsupportedOperationException("Will not be deleted");
         }
     }
     

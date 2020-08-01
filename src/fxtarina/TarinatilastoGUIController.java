@@ -38,7 +38,7 @@ import javafx.scene.control.TableView;
 /**
  * Luokka käyttöliittymän tapahtumien hoitamiseksi
  * @author Noora Jokela & Janne Taipalus
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class TarinatilastoGUIController implements Initializable {
     
@@ -62,7 +62,7 @@ public class TarinatilastoGUIController implements Initializable {
       
       
       @FXML private void handleOhjeet() {
-          ModalController.showModal(TarinatilastoGUIController.class.getResource("TarinatilastoOhjeGUI.fxml"), "Tarinatilasto", null, "");
+          ModalController.showModal(TarinatilastoGUIController.class.getResource("TarinatilastoOhjeGUI.fxml"), "Story Statistics", null, "");
       }
       
       
@@ -139,7 +139,8 @@ public class TarinatilastoGUIController implements Initializable {
             tulostaValitut(tulostusCtrl.getTextArea());
         }
 
-        
+        //Poistettu käytöstä, koska komento jumittaa ohjelman ainakin Ubuntu 18.04:llä
+        //ja sen avaamasta TIM-sivusta ei ole enää paljoakaan hyötyä, koska se vaatii kirjautumisen.
         @FXML private void handleApua() {
               apua();
         }
@@ -152,7 +153,7 @@ public class TarinatilastoGUIController implements Initializable {
 
         
       @FXML private void handleTietoja() {
-          ModalController.showModal(TarinatilastoGUIController.class.getResource("TietojaView.fxml"), "Tarinatilasto", null, "");
+          ModalController.showModal(TarinatilastoGUIController.class.getResource("TietojaView.fxml"), "Story Statistics", null, "");
         }
 
 
@@ -249,7 +250,7 @@ public class TarinatilastoGUIController implements Initializable {
        */
       protected String lueTiedosto(String nimi) throws IOException {
           tiedostonNimi=nimi;
-          setTitle("Tiedosto: " + tiedostonNimi);
+          setTitle("File: " + tiedostonNimi);
           try {
               tarinatilasto.lueTiedostosta(nimi);
               haeSarja(0);
@@ -279,7 +280,7 @@ public class TarinatilastoGUIController implements Initializable {
        */
       public void tulostaValitut(TextArea teksti) {
           try(PrintStream os = TextAreaOutputStream.getTextPrintStream(teksti)) {
-              os.println("Tulostetaan kaikki tarinat");
+              os.println("Printing all the stories");
               for(Tarina tarina : chooserTarinat.getObjects())
               {
                   tulosta(os, tarina);
@@ -322,9 +323,9 @@ public class TarinatilastoGUIController implements Initializable {
       
       
       private void lisaaOsaHakuehdot() {
-          tarinahakuKentta.add("Osan nimi", null);
-          tarinahakuKentta.add("Osan sanamäärä", null);
-          tarinahakuKentta.add("Osan sivumäärä", null);
+          tarinahakuKentta.add("Part's name", null);
+          tarinahakuKentta.add("Part's wordcount", null);
+          tarinahakuKentta.add("Part's pagecount", null);
       }
       
       
@@ -362,7 +363,7 @@ public class TarinatilastoGUIController implements Initializable {
           osaGrid.initTable(headings);
           osaGrid.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
           osaGrid.setEditable(false);
-          osaGrid.setPlaceholder(new Label("Ei vielä osia."));
+          osaGrid.setPlaceholder(new Label("No parts yet."));
           osaGrid.setColumnSortOrderNumber(1);
           osaGrid.setColumnSortOrderNumber(2);
           osaGrid.setColumnWidth(0, 60);
@@ -420,7 +421,7 @@ public class TarinatilastoGUIController implements Initializable {
           }catch (CloneNotSupportedException e) {
               //
           }catch (SailoException e) {
-              Dialogs.showMessageDialog("Ongelmia lisäämisessä: " + e.getMessage()); 
+              Dialogs.showMessageDialog("Problems with adding: " + e.getMessage()); 
           }
       }
     
@@ -510,7 +511,7 @@ public class TarinatilastoGUIController implements Initializable {
                       }
               
                   }catch(SailoException ex) {
-                      Dialogs.showMessageDialog("Tarinan hakemisessa ongelmia! " + ex.getMessage());
+                      Dialogs.showMessageDialog("Problems with searching for a story! " + ex.getMessage());
                   }
               }
               else {
@@ -523,7 +524,7 @@ public class TarinatilastoGUIController implements Initializable {
                           i++;
                       }
                   } catch (SailoException ex) {
-                      Dialogs.showMessageDialog("Tarinan hakemisessa ongelmia! " + ex.getMessage());
+                      Dialogs.showMessageDialog("Problems with searching for a story! " + ex.getMessage());
                   }
               }
               chooserTarinat.setSelectedIndex(index);
@@ -556,7 +557,7 @@ public class TarinatilastoGUIController implements Initializable {
                       naytaOsa(osa);
                   }
               }catch (SailoException ex) {
-                  Dialogs.showMessageDialog("Osan hakemisessa ongelmia!" + ex.getMessage());
+                  Dialogs.showMessageDialog("Problems with searching for a part!" + ex.getMessage());
               }
           }
     
@@ -572,7 +573,7 @@ public class TarinatilastoGUIController implements Initializable {
                   uusi.rekisteroi();
                   tarinatilasto.lisaa(uusi);
               } catch (SailoException ex) {
-                  Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + ex.getMessage());
+                  Dialogs.showMessageDialog("Problems with creating a new one " + ex.getMessage());
                   return;
               }
               haeSarja(uusi.getTunnusNro());        
@@ -595,7 +596,7 @@ public class TarinatilastoGUIController implements Initializable {
                   osaGrid.selectRow(1000);
               }catch (SailoException e)
               {
-                  Dialogs.showMessageDialog("Lisääminen epäonnistui: " + e.getMessage()); 
+                  Dialogs.showMessageDialog("Adding failed: " + e.getMessage()); 
               }
           }
         
@@ -605,7 +606,7 @@ public class TarinatilastoGUIController implements Initializable {
            */
           private void uusiTarina() {
               if(sarjaKohdalla==null) {
-                  Dialogs.showMessageDialog("Ei sarjoja, joihin lisätä tietoja! Luo sarja ensin!");
+                  Dialogs.showMessageDialog("No series where to add information! Create a series first!");
                   return;
               }
               try {
@@ -616,7 +617,7 @@ public class TarinatilastoGUIController implements Initializable {
                   tarinatilasto.lisaa(uusi);
                   haeTarina(uusi.getIdNumero());
               }catch (SailoException ex) {
-                  Dialogs.showMessageDialog("Ongelmia uuden luomisessa " + ex.getMessage());
+                  Dialogs.showMessageDialog("Problems with creating a new one " + ex.getMessage());
                   return;
               }
           }
@@ -642,7 +643,7 @@ public class TarinatilastoGUIController implements Initializable {
           private void poistaTarina() {
               Tarina tarina = tarinaKohdalla;
               if (tarina == null) return;
-              if (!Dialogs.showQuestionDialog("Poisto", "Poistetaanko tarina: " + tarina.getAvain(1) + "?", "Kyllä", "Ei")) return;
+              if (!Dialogs.showQuestionDialog("Deletion", "Delete the story: " + tarina.getAvain(1) + "?", "Yes", "No")) return;
               tarinatilasto.poistaTarina(tarina);
               int index = chooserTarinat.getSelectedIndex();
               haeTarina(0);
@@ -653,7 +654,7 @@ public class TarinatilastoGUIController implements Initializable {
           private void poistaSarja() {
               Sarja sarja = sarjaKohdalla;
               if(sarja == null) return;
-              if (!Dialogs.showQuestionDialog("Poisto", "Poistetaanko sarja \"" + sarja.getNimi() + "\"? Poistat samalla kaikki sarjan tarinat!", "Kyllä", "Ei")) return;
+              if (!Dialogs.showQuestionDialog("Deletion", "Delete the series \"" + sarja.getNimi() + "\"? You will also delete the series's stories!", "Yes", "No")) return;
               int sarjaID = sarja.getTunnusNro();
               for (int i = 0;i<tarinatilasto.getTarinoita();i++) {
                   Tarina tarina = tarinatilasto.annaTarina(i);

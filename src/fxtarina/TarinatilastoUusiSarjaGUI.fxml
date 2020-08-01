@@ -22,7 +22,7 @@
           <RowConstraints vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Label text="Anna uuden sarjan nimi:" GridPane.halignment="RIGHT" />
+            <Label text="Give the new series's name:" GridPane.halignment="RIGHT" />
             <TextField fx:id="editNimi" text="Testisarja" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" />
          </children>
          <padding>

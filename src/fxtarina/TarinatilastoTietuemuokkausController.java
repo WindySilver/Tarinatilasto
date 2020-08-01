@@ -19,7 +19,7 @@ import tarinatilasto.Tietue;
 
 /**
  * @author Janne Taipalus ja Noora Jokela
- * @version 20.5.2020
+ * @version 30.7.2020
  * @param <TYPE> Minkä tyyppisiä olioita käsitellään
  *
  */
@@ -38,7 +38,7 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
  
     @FXML private void handleOK() {
         if(tietueKohdalla != null && tietueKohdalla.getAvain(tietueKohdalla.ekaKentta()).trim().contentEquals("")) {
-            naytaVirhe("Ei saa olla tyhjä!");
+            naytaVirhe("Must not be empty!");
             return;
         }
         palautettava = tietueKohdalla;
@@ -210,6 +210,6 @@ public class TarinatilastoTietuemuokkausController<TYPE extends Tietue> implemen
       */
      public static<TYPE extends Tietue> TYPE kysyTietue(Stage modalityStage, TYPE oletus, int kentta, String sarjanimi) {
          sarjaNimi = sarjanimi;
-         return ModalController.<TYPE, TarinatilastoTietuemuokkausController<TYPE>>showModal(TarinatilastoTietuemuokkausController.class.getResource("TarinatilastoTietuemuokkausGUI.fxml"), "Tarinatilasto", modalityStage, oletus, ctrl -> ctrl.setKentta(kentta));
+         return ModalController.<TYPE, TarinatilastoTietuemuokkausController<TYPE>>showModal(TarinatilastoTietuemuokkausController.class.getResource("TarinatilastoTietuemuokkausGUI.fxml"), "Story Statistics", modalityStage, oletus, ctrl -> ctrl.setKentta(kentta));
      }
 }

@@ -7,7 +7,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Tarinan osan/lukun (käytetään nimeä osa) luokka.
  * @author Janne Taipalus & Noora Jokela
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class Osa implements Cloneable, Tietue {
     
@@ -54,12 +54,12 @@ public class Osa implements Cloneable, Tietue {
     @Override
     public String getKysymys(int k) {
         switch(k) {
-        case 0: return "Tunnusnumero";
-        case 1: return "TarinaID";
-        case 2: return "Numero";
-        case 3: return "Nimi";
-        case 4: return "Sanamäärä";
-        case 5: return "Sivumäärä";
+        case 0: return "IDNumber";
+        case 1: return "StoryID";
+        case 2: return "Number";
+        case 3: return "Name";
+        case 4: return "Wordcount";
+        case 5: return "Pagecount";
         default: return "?";
         }
     }
@@ -136,18 +136,18 @@ public class Osa implements Cloneable, Tietue {
         case 2: try{
             numero = Mjonot.erotaEx(sb, '$', numero);
         }catch (NumberFormatException ex) {
-            return "Osan numero on väärin " + ex.getMessage();
+            return "The part's number is wrong " + ex.getMessage();
         } return null;
-        case 3: nimi = st; if(st.contentEquals("")) return "Nimi ei saa olla tyhjä!"; return null;
+        case 3: nimi = st; if(st.contentEquals("")) return "The name must not be empty!"; return null;
         case 4: try{
             sanamaara = Mjonot.erotaEx(sb, '$', sanamaara);
         }catch (NumberFormatException ex) {
-            return "Sanamäärä on väärin " + ex.getMessage();
+            return "The wordcount is wrong " + ex.getMessage();
         } return null;
         case 5: try{ sivumaara = Mjonot.erotaEx(sb, '$', sivumaara);        }catch (NumberFormatException ex) {
-            return "Sivumäärä on väärin " + ex.getMessage();
+            return "The pagecount is wrong " + ex.getMessage();
         } return null;
-        default: return "Väärä kentän indeksi!";
+        default: return "Wrong field's index!";
         }
     }
     
@@ -191,10 +191,10 @@ public class Osa implements Cloneable, Tietue {
      * @param out Tietovirta, johon tulostetaan.
      */
     public void tulosta(PrintStream out) {
-        out.println("Osa " + numero);
-        out.println("Nimi: " + nimi);
-        out.println(sanamaara + " sanaa");
-        out.println(sivumaara + " sivua");
+        out.println("Part " + numero);
+        out.println("Name: " + nimi);
+        out.println(sanamaara + " words");
+        out.println(sivumaara + " pages");
     }
     
     

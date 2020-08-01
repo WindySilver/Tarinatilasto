@@ -29,7 +29,7 @@
          <top>
             <VBox BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" maxWidth="1000.0" text="Tarinoiden haku">
+                  <Label alignment="CENTER" maxWidth="1000.0" text="Story search">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin></Label>
@@ -38,9 +38,9 @@
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin></TextField>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1000.0" text="Sarjat" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1000.0" text="Series" />
                   <ComboBoxChooser fx:id="chooserSarjat" maxWidth="1000.0" rivit="Testisarja&#10;Test Series&#10;ei sarjaa" VBox.vgrow="ALWAYS" />
-                  <Label alignment="CENTER" maxWidth="1000.0" text="Sarjan tarinat">
+                  <Label alignment="CENTER" maxWidth="1000.0" text="The stories of the series">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin></Label>
@@ -52,7 +52,7 @@
    <center>
       <BorderPane minWidth="400.0" BorderPane.alignment="CENTER">
          <top>
-            <Label text="Tarinan tiedot" BorderPane.alignment="CENTER">
+            <Label text="The story's information" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </BorderPane.margin></Label>
@@ -113,7 +113,7 @@
          <top>
             <VBox minWidth="500.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Osien haku">
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Part search">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
@@ -124,7 +124,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Osat">
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Parts">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -140,64 +140,63 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Tiedosto">
+          <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna">
+                  <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Save">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleAvaa" text="Avaa...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleAvaa" text="Open...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Tulosta....">
+                  <MenuItem mnemonicParsing="false" onAction="#handleTulosta" text="Print....">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Quit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Muokkaa">
+          <Menu mnemonicParsing="false" text="Edit">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusiSarja" text="Lisää uusi sarja...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiSarja" text="Add a new series...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusiTarina" text="Lisää uusi tarina...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiTarina" text="Add a new story...">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleUusiOsa" text="Lisää uusi osa...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleUusiOsa" text="Add a new part...">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="O" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaSarjaa" text="Muokkaa sarjaa...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaSarjaa" text="Edit the series...">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="D" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaTarinaa" text="Muokkaa tarinaa...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaTarinaa" text="Edit the story...">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaOsia" text="Muokkaa osaa...">
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaaOsia" text="Edit the part...">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleVaihdaTarinanSarjaa" text="Vaihda tarinan sarjaa..." />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaTarina" text="Poista tarina..." />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaOsa" text="Poista osa..." />
-                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaSarja" text="Poista sarja..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleVaihdaTarinanSarjaa" text="Change the story's series..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaTarina" text="Delete the story..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaOsa" text="Delete the part..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePoistaSarja" text="Delete the series..." />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Apua">
+          <Menu mnemonicParsing="false" text="Help">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleApua" text="Apua" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Tietoja..." />
-                  <MenuItem mnemonicParsing="false" onAction="#handleOhjeet" text="Ohjeita..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Information..." />
+                  <MenuItem mnemonicParsing="false" onAction="#handleOhjeet" text="Instructions..." />
             </items>
           </Menu>
         </menus>
@@ -208,28 +207,28 @@
          <left>
             <HBox BorderPane.alignment="CENTER">
                <children>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" HBox.hgrow="NEVER">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handleTallenna" text="Save" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets bottom="15.0" left="15.0" right="10.0" top="15.0" />
                      </HBox.margin>
                      <tooltip>
-                        <Tooltip text="Tallenna muutokset" />
+                        <Tooltip text="Save changes" />
                      </tooltip>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handleUusiTarina" text="Uusi tarina" HBox.hgrow="NEVER">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handleUusiTarina" text="New story" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
                      </HBox.margin>
                      <tooltip>
-                        <Tooltip text="Lisää uusi tarina" />
+                        <Tooltip text="Add a new story" />
                      </tooltip>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handleUusiSarja" text="Uusi sarja" HBox.hgrow="NEVER">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handleUusiSarja" text="New series" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets bottom="15.0" left="10.0" right="15.0" top="15.0" />
                      </HBox.margin>
                      <tooltip>
-                        <Tooltip text="Lisää uusi sarja" />
+                        <Tooltip text="Add a new series" />
                      </tooltip>
                   </Button>
                </children>
@@ -238,20 +237,20 @@
          <right>
             <HBox BorderPane.alignment="CENTER">
                <children>
-                  <Button alignment="CENTER_RIGHT" minWidth="60.0" mnemonicParsing="false" onAction="#handleUusiOsa" text="Uusi osa" HBox.hgrow="NEVER">
+                  <Button alignment="CENTER_RIGHT" minWidth="60.0" mnemonicParsing="false" onAction="#handleUusiOsa" text="New part" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets bottom="15.0" left="15.0" right="10.0" top="15.0" />
                      </HBox.margin>
                      <tooltip>
-                        <Tooltip text="Lisää uusi osa" />
+                        <Tooltip text="Add a new part" />
                      </tooltip>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handlePoistaOsa" text="Poista osa">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#handlePoistaOsa" text="Delete part">
                      <HBox.margin>
                         <Insets bottom="15.0" left="10.0" right="15.0" top="15.0" />
                      </HBox.margin>
                      <tooltip>
-                        <Tooltip text="Poista osa" />
+                        <Tooltip text="Delete part" />
                      </tooltip>
                   </Button>
                </children>

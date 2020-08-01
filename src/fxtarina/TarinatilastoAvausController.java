@@ -56,6 +56,6 @@ public class TarinatilastoAvausController implements ModalControllerInterface<St
      */
     public static String kysyNimi(Stage modalityStage, String oletus)
     {
-        return ModalController.showModal(TarinatilastoAvausController.class.getResource("AvausView.fxml"), "Tarinatilasto", modalityStage, oletus);
+        return ModalController.showModal(TarinatilastoAvausController.class.getResource("AvausView.fxml"), "Story Statistics", modalityStage, oletus);
     }  
 }

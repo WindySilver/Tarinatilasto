@@ -1,6 +1,8 @@
-﻿!https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/noemjoke = Suunnitelma TIMissä
+Note! The headers have been translated for a quick overview on what this contains, but additional translations are not planned at the moment.
 
-<h3>Kuvamateriaali</h3>
+﻿!https://tim.jyu.fi/view/kurssit/tie/ohj2/2019k/ht/noemjoke = The plan on TIM
+
+<h3>Image material</h3>
 kuvat/htpaaikkuna.png = ohjelman alustava pääikkuna (käsin piirretty)
 kuvat/ht2suunnitelma.fxml = kakkosvaiheen suunnitelman tiedosto
 kuvat\ht2muokkausikkuna.fxml = tarinan muokkausikkuna kakkosvaiheen suunnitelmaan
@@ -26,11 +28,11 @@ kuvat\ht7uusisarja.png = seiskavaiheen uuden sarjan lisäysikkunan kuva
 kuvat\ht7vaihdatarinansarjaa.png = kuva seiskavaiheen ikkunasta, jossa vaihdetaan tarinan sarjaa
 kuvat\ht7virheilmoitus.png = kuva virheilmoituksesta seiskavaiheessa 
 
-<h3>Tietorakenne</h3>
+<h3>Data structure</h3>
 kuvat\tarinatilasto.svg = Tietorakenteen kuva
 kuvat\tarinatilasto.png = Tietorakenteen kuva, jonka TIM pystyy näyttämäänkin
 
-<h3>Tietorakenteiden käsittely koodissa</h3>
+<h3>Data structure handling in the code</h3>
 src\tarinatilasto\Sarja.java = Luokka sarjalle
 src\tarinatilasto\Sarjat.java = Luokka sarjoille
 src\tarinatilasto\Tarina.java = Luokka tarinalle
@@ -43,7 +45,7 @@ src\tarinatilasto\SarjaTest.java = generoidut Junit testit sarja-luokalle
 src\tarinatilasto\SisaltoTarkistaja.java = Luokka tarkistajalle, joka tarkistaa tekstikenttien sisällöt.
 src\tarinatilasto\Tietue.java = Rajapinta tietueelle.
 
-<h3>Käyttöliittymän ulkoasu</h3>
+<h3>The UI layout</h3>
 src\fxtarina\tarinatilasto.css = Tarinatilaston CSS-tiedosto
 src\fxtarina\TarinatilastoGUIView.fxml = Tarinatilaston pääikkunan FXML-tiedosto
 src\fxtarina\TarinatilastoOsamuokkausGUI.fxml = Osien muokkausikkunan FXML
@@ -55,7 +57,7 @@ src\fxtarina\TulostusView.fxml = Tulostusikkunan FXML
 src\fxtarina\TarinatilastoOhjeGUI.fxml = Ohjeikkunan FXML
 src\fxtarina\TarinatilastoSarjavaihtoGUI.fxml = Tarinan sarjan vaihtamisen ikkunan FXML
 
-<h3>Käyttöliittymän koodi</h3>
+<h3>UI code</h3>
 src\fxtarina\TarinatilastoMain.java = Tarinatilaston pääohjelma
 src\fxtarina\TarinatilastoGUIController.java = Tarinatilaston pääikkunan kontrolleri
 src\fxtarina\TarinatilastoTulostusController.java = Tulostusikkunan kontrolleri
@@ -64,8 +66,8 @@ src\fxtarina\TarinatilastoTietuemuokkausController.java = Kontrolleri tarinoiden
 src\fxtarina\TarinatilastoSarjaController.java = Kontrolleri sarjan luomis- ja muokkausikkunalle
 src\fxtarina\TarinatilastoSarjavaihtoController.java = Kontrolleri sarjan vaihtoikkunalle
 
-<h3>Muita tiedostoja</h3>
+<h3>Other files</h3>
 tarinat\tarinat.dat = Tarinoiden tekstitiedosto
 tarinat\sarjat.dat = sarjojen tekstitiedosto
 tarinat\osat.dat = osien tekstitiedosto
-tarinatilasto.jar = Tarinatilaston ajettava jar-tiedosto
+tarinatilasto.jar/storystaristics.jar = Tarinatilaston ajettava jar-tiedosto

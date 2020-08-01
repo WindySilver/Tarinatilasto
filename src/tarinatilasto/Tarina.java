@@ -9,7 +9,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Luokka tarinalle.
  * @author Noora Jokela ja Janne Taipalus
- * @version 6.7.2019
+ * @version 30.7.2020
  *
  */
 public class Tarina implements Cloneable, Tietue {
@@ -190,16 +190,16 @@ public class Tarina implements Cloneable, Tietue {
      * @param sarjaNimi Tulostettavan tarinan sarjan nimi
      */
     public void tulosta(PrintStream out, String sarjaNimi) {
-        out.println("Tarinan nimi: " + nimi);
-        out.println("Tarina kuuluu sarjaan: " + sarjaNimi);
-        out.println("Tarinan on kirjoittanut: " + tekija);
-        out.println("Tarinan kieli on: " + kieli);
-        out.println("Tarinassa on " + 
-        sanamaara + " sanaa ja " + osienMaara + " osaa.");
-        out.println("Tarinassa on " + sivumaara + " sivua.");
-        out.println("Tarina on julkaistu seuraavissa paikoissa: "
+        out.println("The story's name: " + nimi);
+        out.println("The story belongs into the series: " + sarjaNimi);
+        out.println("The story is written by: " + tekija);
+        out.println("The story's language is: " + kieli);
+        out.println("The story is " + 
+        sanamaara + " words long and " + osienMaara + " parts long.");
+        out.println("The story is " + sivumaara + " pages long.");
+        out.println("The story has been released in the following places: "
         + julkaisut);
-        out.println("Lisätietoja tarinasta: " + lisatietoja);
+        out.println("Additional information on the story: " + lisatietoja);
     }
 
 
@@ -343,7 +343,7 @@ public class Tarina implements Cloneable, Tietue {
                 sanamaara = Mjonot.erotaEx(sb, '§', getSanamaara());;
             }catch (NumberFormatException e)
             {
-                return "Sanamäärä on väärin " + e.getMessage();
+                return "The wordcount is wrong " + e.getMessage();
             }
             return null;
         case 6:
@@ -351,7 +351,7 @@ public class Tarina implements Cloneable, Tietue {
                 osienMaara = Mjonot.erotaEx(sb, '§', getOsienMaara());
             }catch (NumberFormatException e)
             {
-                return "Osien mmäärä on väärin " + e.getMessage();
+                return "The number of parts is wrong " + e.getMessage();
             }
             return null;
         case 7:
@@ -359,7 +359,7 @@ public class Tarina implements Cloneable, Tietue {
                 sivumaara = Mjonot.erotaEx(sb, '§', getSivumaara());
             }catch (NumberFormatException e)
             {
-                return "Sivumäärä on väärin " + e.getMessage();
+                return "The pagecount is wrong " + e.getMessage();
             }
             return null;
         case 8:
@@ -369,7 +369,7 @@ public class Tarina implements Cloneable, Tietue {
             lisatietoja = tjono;
             return null;
         default:
-            return "ÄÄliö";
+            return "Idiot";
         }
     }
     
@@ -382,17 +382,17 @@ public class Tarina implements Cloneable, Tietue {
     @Override
     public String getKysymys(int k) {
         switch (k) {
-        case 0: return "idNumero";
-        case 1: return "Nimi";
-        case 2: return "Sarjan nimi";
-        case 3: return "Tekijä";
-        case 4: return "Kieli";
-        case 5: return "Sanamäärä";
-        case 6: return "Osien määrä";
-        case 7: return "Sivumäärä";
-        case 8: return "Julkaisut";
-        case 9: return "Lisätietoja";
-        default: return "Ääliö";
+        case 0: return "idNumber";
+        case 1: return "Name";
+        case 2: return "Series's name";
+        case 3: return "Creator";
+        case 4: return "Language";
+        case 5: return "Wordcount";
+        case 6: return "Number of parts";
+        case 7: return "Pagecount";
+        case 8: return "Releases";
+        case 9: return "Additional information";
+        default: return "Idiot";
         }
     }
     

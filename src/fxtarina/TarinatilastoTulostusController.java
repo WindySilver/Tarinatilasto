@@ -9,7 +9,7 @@ import javafx.scene.web.WebEngine;
 
 /**
  * @author Noora Jokela & Janne Taipalus
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class TarinatilastoTulostusController implements ModalControllerInterface<String> {
 
@@ -42,7 +42,6 @@ public class TarinatilastoTulostusController implements ModalControllerInterface
     @Override
     public void setDefault(String oletus)
     {
-        //if(oletus==null) return;
         tulostusalue.setText(oletus);
     }
     
@@ -72,7 +71,7 @@ public class TarinatilastoTulostusController implements ModalControllerInterface
      * @return Kontrolleri, jolta voidaan pyytää lisää tietoja.
      */
     public static TarinatilastoTulostusController tulosta(String tulostus) {
-        TarinatilastoTulostusController tulostusCtrl = ModalController.showModeless(TarinatilastoTulostusController.class.getResource("TulostusView.fxml"), "Tulostus", tulostus);
+        TarinatilastoTulostusController tulostusCtrl = ModalController.showModeless(TarinatilastoTulostusController.class.getResource("TulostusView.fxml"), "Printing", tulostus);
         return tulostusCtrl;
     }   
 }

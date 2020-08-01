@@ -14,7 +14,7 @@
         <buttons>
             <Label fx:id="labelVirhe" />
           <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOK" text="OK" />
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Peruuta" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
         </buttons>
          <BorderPane.margin>
             <Insets bottom="5.0" right="10.0" />

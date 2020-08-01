@@ -8,7 +8,7 @@ import fi.jyu.mit.ohj2.WildChars;
 /**
  * Tarinatilaston osat-luokka, joka osaa mm. lisätä uuden osan.
  * @author Janne Taipalus & Noora Jokela
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class Osat implements Iterable<Osa> {
     
@@ -98,9 +98,9 @@ public class Osat implements Iterable<Osa> {
             muutettu = false;
         }catch (FileNotFoundException e)
         {
-            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea!");
+            throw new SailoException("The file " + getTiedostonNimi() + " doesn't open!");
         }catch (IOException e) {
-            throw new SailoException ("Ongelmia tiedoston kanssa: " + e.getMessage());
+            throw new SailoException ("Problems with the file: " + e.getMessage());
         }
     }
     
@@ -183,15 +183,15 @@ public class Osat implements Iterable<Osa> {
         ftied.renameTo(fbak);
         
         try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))) {
-            fo.println("; Kenttien järjestys tiedostossa on seuraava:");
-            fo.println(";oid|tid|numero|nimi|sanamäärä|sivumäärä|");
+            fo.println("; The fields' order in the file is the following:");
+            fo.println(";pid|stid|number|name|wordcount|pagecount|");
             for (Osa osa : this) {
                 fo.println(osa.toString());
             }
         } catch (FileNotFoundException e) {
-            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea!");
+            throw new SailoException("The file " + ftied.getName() + " doesn't open!");
         } catch (IOException e) {
-            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+            throw new SailoException("Pproblems with writing into the file " + ftied.getName() + "");
         }
         muutettu = false;
     }

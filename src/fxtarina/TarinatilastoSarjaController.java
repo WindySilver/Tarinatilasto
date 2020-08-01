@@ -15,7 +15,7 @@ import tarinatilasto.Sarja;
 
 /**
  * @author Noora Jokela ja Janne Taipalus
- * @version 20.5.2020
+ * @version 30.7.2020
  *
  */
 public class TarinatilastoSarjaController implements ModalControllerInterface<Sarja>, Initializable {
@@ -33,7 +33,7 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
     
     @FXML private void handleOK() {
         if (sarjaKohdalla != null && sarjaKohdalla.getNimi().trim().equals("")) {
-            naytaVirhe("Nimi ei saa olla tyhjä!");
+            naytaVirhe("The name must not be empty!");
             return;
         }
         palautettava = sarjaKohdalla;
@@ -122,6 +122,6 @@ public class TarinatilastoSarjaController implements ModalControllerInterface<Sa
      * @return null jos painetaan cancel, muuten täytetty tietue
      */
     public static Sarja kysySarja(Stage modalityStage, Sarja oletus) {
-        return ModalController.<Sarja, TarinatilastoSarjaController>showModal(TarinatilastoSarjaController.class.getResource("TarinatilastoUusiSarjaGUI.fxml"), "Tarinatilasto", modalityStage, oletus, null);
+        return ModalController.<Sarja, TarinatilastoSarjaController>showModal(TarinatilastoSarjaController.class.getResource("TarinatilastoUusiSarjaGUI.fxml"), "Story Statistics", modalityStage, oletus, null);
     }
 }

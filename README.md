@@ -1,9 +1,12 @@
-# Tarinatilasto
+# Story Statistics
 
-Ohjelmointi 2 2019 kevät harjoitustyö (siirretty valmiina Githubiin toisesta versiohallinnasta)
+Programming 2 2019 spring practical work (moved to GitHub from another version control system after finishing)
 
-To-do:
+This program was created by two Finnish students as their practical work for a Finnish programming course and thus its documentation and code are in Finnish. This version, however, has a completely English UI for non-Finnish people.
 
-    Englanninkielinen käännös
+There are no plans to translate the documentation at the moment.
 
-The Finnish version of Story Statistics. The English version of this is on my to-do list.
+# How to run
+
+To run this program, you need to have JavaFX installed on your system. You can launch it from the terminal (or your OS's equivalent) with this command:
+java --module-path THELOCATIONOFJAVAFXONYOURSYSTEM --add-modules=javafx.controls,javafx.fxml,javafx.base,javafx.media,javafx.web,javafx.swing -jar THELOCATIONOFTHESTORYSTATISTICSJAR

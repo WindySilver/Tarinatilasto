@@ -7,7 +7,7 @@ import fi.jyu.mit.ohj2.Mjonot;
 /**
  * Luokka sarjalle, joka määrittää sen, mitkä tarinat kuuluvat samaan jatkumoon.
  * @author Janne Taipalus & Noora Jokela
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class Sarja implements Cloneable {
 
@@ -129,8 +129,8 @@ public class Sarja implements Cloneable {
      * @param out Tietovirta, johon tulostetaan.
      */
     public void tulosta(PrintStream out) {
-        out.println("Sarjan nimi: " + nimi);
-        out.println("Tunnusnumero: " + tunnusNro);
+        out.println("The series's name: " + nimi);
+        out.println("ID Number: " + tunnusNro);
     }
     
     

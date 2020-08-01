@@ -61,7 +61,7 @@ public class TarinatilastoSarjavaihtoController implements Initializable, ModalC
      */
     public static Tarina kysyTarina(Stage modalityStage, Tarina tarina, Sarjat sarjat, int kentta) {
         sarjalista = sarjat;
-        return ModalController.<Tarina, TarinatilastoSarjavaihtoController>showModal(TarinatilastoSarjavaihtoController.class.getResource("TarinatilastoSarjavaihtoGUI.fxml"), "Tarinatilasto", modalityStage, tarina, ctrl -> ctrl.setKentta(kentta));        
+        return ModalController.<Tarina, TarinatilastoSarjavaihtoController>showModal(TarinatilastoSarjavaihtoController.class.getResource("TarinatilastoSarjavaihtoGUI.fxml"), "Story Statistics", modalityStage, tarina, ctrl -> ctrl.setKentta(kentta));        
     }
 
 

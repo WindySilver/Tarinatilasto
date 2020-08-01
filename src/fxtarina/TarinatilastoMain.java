@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 /**
  * Pääohjelma tarinatilasto-ohjelman käynnistämiseksi
  * @author Noora Jokela & Janne Taipalus
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class TarinatilastoMain extends Application {
     @Override
@@ -24,7 +24,7 @@ public class TarinatilastoMain extends Application {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("tarinatilasto.css").toExternalForm());
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Tarinatilasto");
+            primaryStage.setTitle("Story Statistics");
             primaryStage.show();
             primaryStage.setOnCloseRequest((event) -> {
                 if (!tarinatilastoCtrl.voikoSulkea()) event.consume();

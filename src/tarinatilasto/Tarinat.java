@@ -60,7 +60,7 @@ public class Tarinat implements Iterable<Tarina> {
      * @throws IndexOutOfBoundsException jos i ei ole sallitulla alueella.
      */
     public Tarina anna(int i) throws IndexOutOfBoundsException {
-        if (i<0||i>= lkm) throw new IndexOutOfBoundsException("Virheellinen indeksi: " + i);
+        if (i<0||i>= lkm) throw new IndexOutOfBoundsException("Incorrect index: " + i);
         return alkiot[i];
     }
 
@@ -108,15 +108,15 @@ public class Tarinat implements Iterable<Tarina> {
         ftied.renameTo(fbak);
         
         try (PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath()))){
-            fo.println("; Kenttien järjestys tiedostossa on seuraava:");
-            fo.println(";id|tarinan nimi|sarjan id|tekijä|kieli|sanamäärä|osien määrä|sivumäärä|julkaisut|lisätiedot|");
+            fo.println("; The fields' order in the file is the following:");
+            fo.println(";id|story's name|series's id|creator|language|wordcount|number of parts|pagecount|releases|additional info|");
             for (Tarina tarina : this) {
                 fo.println(tarina.toString());
             }
         } catch (FileNotFoundException e ) {
-            throw new SailoException("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+            throw new SailoException("Pproblems with writing into the file " + ftied.getName());
         } catch (IOException e ) { 
-            throw new SailoException("Tiedosto " + ftied.getName() + " ei aukea");
+            throw new SailoException("The file " + ftied.getName() + " doesn't open");
         }
         muutettu = false;
     }
@@ -192,9 +192,9 @@ public class Tarinat implements Iterable<Tarina> {
             muutettu = false;
         }catch (FileNotFoundException e)
         {
-            throw new SailoException("Tiedosto " + getTiedostonNimi() + " ei aukea!");
+            throw new SailoException("The file " + getTiedostonNimi() + " doesn't open!");
         }catch (IOException e) {
-            throw new SailoException ("Ongelmia tiedoston kanssa: " + e.getMessage());
+            throw new SailoException ("Problems with the file: " + e.getMessage());
         }
     }
     
@@ -316,7 +316,7 @@ public class Tarinat implements Iterable<Tarina> {
          */
         @Override
         public Tarina next() throws NoSuchElementException {
-            if (!hasNext()) throw new NoSuchElementException("Ei ole");
+            if (!hasNext()) throw new NoSuchElementException("Does not exist");
             return anna(kohdalla++);
         }
         
@@ -328,7 +328,7 @@ public class Tarinat implements Iterable<Tarina> {
          */
         @Override
         public void remove() throws UnsupportedOperationException {
-            throw new UnsupportedOperationException("Me ei poisteta");
+            throw new UnsupportedOperationException("Will not be deleted");
         }
     }
 

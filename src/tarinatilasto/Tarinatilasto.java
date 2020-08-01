@@ -8,7 +8,7 @@ import java.util.*;
  * Tarinatilasto-luokka, joka huolehtii sarjoista, tarinoista ja osista. Pääosin kaikki
  * metodit ovat vain "välittäjämetodeja" muihin tietorakenneluokkiin.
  * @author Janne Taipalus & Noora Jokela
- * @version 2.5.2019
+ * @version 30.7.2020
  *
  *Testien alustus
  *@example
@@ -308,6 +308,10 @@ public class Tarinatilasto {
     
     /**
      * Asettaa tiedostojen perusnimet.
+     * Additional note: For cross-language compatibility, the file names haven't been changed for the translations.
+     * Sarjat = Series
+     * Tarinat = Stories
+     * Osat = Parts
      * @param nimi Uusi nimi.
      */
     public void setTiedosto(String nimi) {

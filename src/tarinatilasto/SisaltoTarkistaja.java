@@ -3,7 +3,7 @@ package tarinatilasto;
 /**
  * Tarkistaa, että jono sisältää vain valittuja merkkejä. Hyväksyy tyhjän jonon.
  * @author Noora Jokela ja Janne Taipalus
- * @version 2.5.2019
+ * @version 30.7.2020
  */
 public class SisaltoTarkistaja {
     
@@ -74,6 +74,6 @@ public class SisaltoTarkistaja {
      */
     public String tarkista(String jono) {
         if (onkoVain(jono, sallitut)) return null;
-        return "Saa olla vain merkkejä " + sallitut;
+        return "There ay only be these characters: " + sallitut;
     }
 }
